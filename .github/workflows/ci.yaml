@@ -1,0 +1,74 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  node_version: 12.x
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.node_version }}
+    - run: npm install
+    - name: Lint openapi specifications
+      run: npm run lint:all
+
+  build-and-publish:
+    needs: [lint]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    # - name: Set variables
+    #   id: vars
+    #   run: |
+    #     echo ::set-output name=version::test
+    #     echo ::set-output name=publish::false
+    #     if [[ ${GITHUB_REF} == refs/tags/* ]]
+    #     then
+    #       echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+    #       echo ::set-output name=publish::true
+    #     elif [[ ${GITHUB_REF} == refs/heads/main ]]
+    #     then
+    #       echo ::set-output name=version::
+    #       echo ::set-output name=publish::true
+    #     elif [[ ${GITHUB_REF} == refs/heads/develop ]]
+    #     then
+    #       echo ::set-output name=version::develop
+    #       echo ::set-output name=publish::true
+    #     fi
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.node_version }}
+    - run: npm install -g @redocly/openapi-cli && npm install -g redoc-cli
+    - run: npm install -g @ga4gh/gh-openapi-docs
+    - name: Create .spec-docs.json
+      run: gh-openapi-docs
+    - name: Commit documentation changes
+      run: |
+        git clone https://github.com/Sage-Bionetworks/submission_service.git --branch gh-pages --single-branch gh-pages
+        cp -r docs/* gh-pages/
+        cd gh-pages
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update documentation" -a || true
+        # The above command will fail if no changes were present, so we ignore
+        # that.
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        directory: gh-pages
+        github_token: ${{ secrets.ACCESS_TOKEN }}
+        force: true
