@@ -10,22 +10,21 @@ env:
   node_version: 12.x
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.node_version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.node_version }}
-    - run: npm install
-    - name: Lint openapi specifications
-      run: npm run lint:all
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Use Node.js ${{ env.node_version }}
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: ${{ env.node_version }}
+  #   - run: npm install
+  #   - name: Lint openapi specifications
+  #     run: npm run lint:all
 
   build-and-publish:
-    needs: [lint]
+    # needs: [lint]
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     # - name: Set variables
@@ -52,7 +51,7 @@ jobs:
         node-version: ${{ env.node_version }}
     - run: npm install -g @redocly/openapi-cli && npm install -g redoc-cli
     - run: npm install -g @ga4gh/gh-openapi-docs
-    - name: Create .spec-docs.json
+    - name: Create openapi docs
       run: gh-openapi-docs
     - name: Commit documentation changes
       run: |
