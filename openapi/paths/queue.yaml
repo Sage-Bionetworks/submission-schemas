@@ -1,0 +1,24 @@
+post:
+  tags:
+    - queue
+  summary: Create a queue
+  description: Creates a queue for storing and running of submissions
+  operationId: "createQueue"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AnnotationStore.yaml
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AnnotationStore.yaml
+      description: Success
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml
