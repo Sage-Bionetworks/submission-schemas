@@ -1,0 +1,63 @@
+parameters:
+  - in: path
+    name: datasetId
+    description: The ID of the dataset
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - queue
+  summary: Get a queue by its ID
+  description: Returns the queue for a given ID
+  operationId: "getQueue"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Queue.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+delete:
+  tags:
+    - queue
+  summary: Delete a queue by its ID
+  description: Deletes the queue for a given ID
+  operationId: "deleteQueue"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Queue.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+put:
+  tags:
+    - queue
+  summary: Update a queue by its ID
+  description: Updates the queue for a given ID
+  operationId: "updateQueue"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Queue.yaml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Queue.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
