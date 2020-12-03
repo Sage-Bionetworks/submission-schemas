@@ -1,0 +1,12 @@
+type: object
+description: A file Submission
+properties:
+  submission_id:
+    type: integer
+    description: Queue Id
+  submitter:
+    type: string
+    description: Submitter name
+  file:
+    type: string
+    description: File to submit to challenge
