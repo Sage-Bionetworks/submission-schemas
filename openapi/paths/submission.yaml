@@ -18,7 +18,6 @@ post:
               $ref: ../components/schemas/DockerSubmission.yaml
               $ref: ../components/schemas/FileSubmission.yaml
               $ref: ../components/schemas/WorkflowSubmission.yaml
-
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
