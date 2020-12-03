@@ -1,0 +1,15 @@
+type: object
+description: A workflow Submission
+properties:
+  submission_id:
+    type: integer
+    description: Queue Id
+  submitter:
+    type: string
+    description: Submitter name
+  workflow:
+    type: string
+    description: Workflow to run
+  workflow_inputs:
+    type: string
+    description: Worklfow inputs
