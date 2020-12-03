@@ -1,0 +1,19 @@
+type: object
+description: A Docker Submission
+properties:
+  submission_id:
+    type: integer
+    description: Queue Id
+  submitter:
+    type: string
+    description: Submitter name
+  docker:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Docker repository name
+      digest:
+        type: string
+        description: Docker digest
+
