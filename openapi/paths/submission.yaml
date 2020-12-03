@@ -1,0 +1,26 @@
+post:
+  tags:
+    - submission
+  summary: Create a submission
+  description: Creates a submission
+  operationId: "createSubmission"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Submission.yaml
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            oneOf:
+              $ref: ../components/schemas/DockerSubmission.yaml
+              $ref: ../components/schemas/DockerSubmission.yaml
+      description: Success
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml
