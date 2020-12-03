@@ -8,13 +8,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/AnnotationStore.yaml
+          $ref: ../components/schemas/Queue.yaml
   responses:
     '200':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/AnnotationStore.yaml
+            $ref: ../components/schemas/Queue.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
