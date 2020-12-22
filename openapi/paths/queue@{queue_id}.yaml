@@ -1,7 +1,7 @@
 parameters:
   - in: path
-    name: datasetId
-    description: The ID of the dataset
+    name: queue_id
+    description: The ID of the queue
     required: true
     schema:
       type: string
