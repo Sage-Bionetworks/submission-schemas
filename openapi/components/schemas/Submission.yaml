@@ -1,0 +1,9 @@
+type: object
+description: A Submission
+properties:
+  submission_id:
+    type: integer
+    description: Queue Id
+  submitter:
+    type: string
+    description: Submitter name
