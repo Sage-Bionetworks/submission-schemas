@@ -1,7 +1,7 @@
 type: object
 description: A Submission
 properties:
-  submission_id:
+  submissionId:
     type: integer
     description: Queue Id
   submitter:

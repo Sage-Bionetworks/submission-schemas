@@ -1,6 +1,6 @@
 parameters:
   - in: path
-    name: queue_id
+    name: queueId
     description: The ID of the queue
     required: true
     schema:

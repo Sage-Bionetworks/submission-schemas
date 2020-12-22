@@ -1,25 +1,25 @@
 type: object
 description: A Queue to link submissions to runtime
 properties:
-  queue_id:
+  queueId:
     type: integer
     description: Queue Id
-  trs_id:
+  trsId:
     type: integer
     description: Trs Id
-  wes_default:
+  wesDefault:
     default: local
     type: string
-  wes_opts:
+  wesOpts:
     items:
       type: string
     type: array
-  workflow_attachments:
+  workflowAttachments:
     items:
       type: string
     type: array
     description: Workflow attachments such as intermediate files workflow inputs
-  workflow_type:
+  workflowType:
     default: CWL
     enum:
       - CWL
@@ -28,6 +28,6 @@ properties:
       - kubeflow
     type: string
     description: Type of workflow to run
-  workflow_url:
+  workflowUrl:
     type: string
     description: Path to workflow
