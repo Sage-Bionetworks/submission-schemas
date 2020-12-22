@@ -1,6 +1,6 @@
 post:
   tags:
-    - submission
+    - Submission
   summary: Create a submission
   description: Creates a submission
   operationId: "createSubmission"

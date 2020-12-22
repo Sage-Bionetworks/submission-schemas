@@ -1,0 +1,36 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: thomas.yu@sagebionetworks.org
+  description: |
+    This is the submission API to obtain the metadata of the submission
+    and send the submission to execute in the right workflow environment
+  license:
+    name: Apache-2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  termsOfService: challenge.org
+  title: Submission API
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - description: Ceate and link synapse queues with workflow engines
+    name: Queue
+  # - description: Allow synapse submissions to interact with supported workflow engines
+  #   externalDocs:
+  #     description: Mimics GA4GH
+  #     url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
+  #   name: workflow
+  - description: Submission and its metadata
+    externalDocs:
+      description: More about submission references
+      url: >-
+        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
+    name: Submission
+paths:
+  /queue:
+    $ref: paths/queue.yaml
+  /queue/{queueId}:
+    $ref: paths/queue@{queue_id}.yaml
+  /submission:
+    $ref: paths/submission.yaml

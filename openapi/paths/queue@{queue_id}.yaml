@@ -7,7 +7,7 @@ parameters:
       type: string
 get:
   tags:
-    - queue
+    - Queue
   summary: Get a queue by its ID
   description: Returns the queue for a given ID
   operationId: "getQueue"
@@ -24,7 +24,7 @@ get:
       $ref: ../components/responses/NotFound.yaml
 delete:
   tags:
-    - queue
+    - Queue
   summary: Delete a queue by its ID
   description: Deletes the queue for a given ID
   operationId: "deleteQueue"
@@ -41,7 +41,7 @@ delete:
       $ref: ../components/responses/NotFound.yaml
 put:
   tags:
-    - queue
+    - Queue
   summary: Update a queue by its ID
   description: Updates the queue for a given ID
   operationId: "updateQueue"
