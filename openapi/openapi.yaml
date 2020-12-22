@@ -30,7 +30,7 @@ tags:
 paths:
   /queue:
     $ref: paths/queue.yaml
-  /queue/{queueId}:
+  /queue/{queue_id}:
     $ref: paths/queue@{queue_id}.yaml
   /submission:
     $ref: paths/submission.yaml
