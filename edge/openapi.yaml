@@ -205,33 +205,26 @@ components:
         queueId:
           type: integer
           description: Queue Id
-        trsId:
-          type: integer
-          description: Trs Id
-        wesDefault:
+        wesApiHost:
           default: local
           type: string
-        wesOpts:
+          description: Workflow Execution Service implementation endpoint
+        workflowFiles:
           items:
             type: string
           type: array
-        workflowAttachments:
-          items:
-            type: string
-          type: array
-          description: Workflow attachments such as intermediate files workflow inputs
-        workflowType:
-          default: CWL
+          description: Workflow/Tool files and templates
+        workflowInput:
+          description: Path to workflow inputs
+          type: string
+        submissionType:
+          description: Path to workflow inputs
+          type: string
           enum:
-            - CWL
-            - WDL
-            - nextflow
-            - kubeflow
-          type: string
-          description: Type of workflow to run
-        workflowUrl:
-          type: string
-          description: Path to workflow
+            - docker
+            - file
+            - workflow
+            - workflow_inputs
     QueueListResponse:
       type: object
       description: A page of queues

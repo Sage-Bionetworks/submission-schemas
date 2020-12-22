@@ -314,41 +314,31 @@
             "type": "integer",
             "description": "Queue Id"
           },
-          "trsId": {
-            "type": "integer",
-            "description": "Trs Id"
-          },
-          "wesDefault": {
+          "wesApiHost": {
             "default": "local",
-            "type": "string"
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
           },
-          "wesOpts": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "workflowAttachments": {
+          "workflowFiles": {
             "items": {
               "type": "string"
             },
             "type": "array",
-            "description": "Workflow attachments such as intermediate files workflow inputs"
+            "description": "Workflow/Tool files and templates"
           },
-          "workflowType": {
-            "default": "CWL",
+          "workflowInput": {
+            "description": "Path to workflow inputs",
+            "type": "string"
+          },
+          "submissionType": {
+            "description": "Path to workflow inputs",
+            "type": "string",
             "enum": [
-              "CWL",
-              "WDL",
-              "nextflow",
-              "kubeflow"
-            ],
-            "type": "string",
-            "description": "Type of workflow to run"
-          },
-          "workflowUrl": {
-            "type": "string",
-            "description": "Path to workflow"
+              "docker",
+              "file",
+              "workflow",
+              "workflow_inputs"
+            ]
           }
         }
       },
