@@ -2,8 +2,9 @@
 
 The OpenAPI specification for Submission Services.
 
-Releases
-https://sage-bionetworks.github.io/rocc-schemas/latest/docs/
+## Releases
+* https://sage-bionetworks.github.io/submission-schemas/edge/docs/
+
 
 ## Working on your OpenAPI Definition
 
