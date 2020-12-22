@@ -1,6 +1,6 @@
 {
-    "apiSpecPath": "openapi_server/openapi/openapi.yaml",
+    "apiSpecPath": "openapi/openapi.yaml",
     "docsRoot": "docs",
-    "defaultBranch": "main",
+    "defaultBranch": "",
     "branchPathBase": "preview"
 }
