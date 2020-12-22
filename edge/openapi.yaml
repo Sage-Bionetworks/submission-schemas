@@ -1,0 +1,344 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: thomas.yu@sagebionetworks.org
+  description: |
+    This is the submission API to obtain the metadata of the submission
+    and send the submission to execute in the right workflow environment
+  license:
+    name: Apache-2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  termsOfService: challenge.org
+  title: Submission API
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - description: Ceate and link synapse queues with workflow engines
+    name: Queue
+  - description: Submission and its metadata
+    externalDocs:
+      description: More about submission references
+      url: >-
+        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
+    name: Submission
+paths:
+  /queue:
+    post:
+      tags:
+        - Queue
+      summary: Create a queue
+      description: Creates a queue for storing and running of submissions
+      operationId: createQueue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Queue'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    get:
+      tags:
+        - Queue
+      summary: List the available queues
+      description: Returns the queues
+      operationId: listQueues
+      parameters:
+        - in: query
+          name: limit
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - in: query
+          name: offset
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueListResponse'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/queue/{queueId}':
+    parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Queue
+      summary: Get a queue by its ID
+      description: Returns the queue for a given ID
+      operationId: getQueue
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Queue
+      summary: Delete a queue by its ID
+      description: Deletes the queue for a given ID
+      operationId: deleteQueue
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Queue
+      summary: Update a queue by its ID
+      description: Updates the queue for a given ID
+      operationId: updateQueue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Queue'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /submission:
+    post:
+      tags:
+        - Submission
+      summary: Create a submission
+      description: Creates a submission
+      operationId: createSubmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Submission'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+components:
+  schemas:
+    ListResponseMetadata:
+      type: object
+      description: A page of results
+      properties:
+        offset:
+          description: Index of the first result that must be returned
+          type: integer
+        limit:
+          description: Maximum number of results returned
+          type: integer
+        links:
+          description: Links to navigate to different pages of results
+          type: object
+          properties:
+            next:
+              description: Link to the next page of results
+              type: string
+      required:
+        - offset
+        - limit
+        - links
+    Queue:
+      type: object
+      description: A Queue to link submissions to runtime
+      properties:
+        queueId:
+          type: integer
+          description: Queue Id
+        trsId:
+          type: integer
+          description: Trs Id
+        wesDefault:
+          default: local
+          type: string
+        wesOpts:
+          items:
+            type: string
+          type: array
+        workflowAttachments:
+          items:
+            type: string
+          type: array
+          description: Workflow attachments such as intermediate files workflow inputs
+        workflowType:
+          default: CWL
+          enum:
+            - CWL
+            - WDL
+            - nextflow
+            - kubeflow
+          type: string
+          description: Type of workflow to run
+        workflowUrl:
+          type: string
+          description: Path to workflow
+    QueueListResponse:
+      type: object
+      description: A page of queues
+      allOf:
+        - $ref: '#/components/schemas/ListResponseMetadata'
+        - type: object
+          properties:
+            queues:
+              description: An array of queues
+              type: array
+              items:
+                $ref: '#/components/schemas/Queue'
+    Error:
+      type: object
+      description: Problem details (tools.ietf.org/html/rfc7807)
+      properties:
+        title:
+          type: string
+          description: A human readable documentation for the problem type
+        status:
+          type: integer
+          description: The HTTP status code
+        detail:
+          type: string
+          description: >-
+            A human readable explanation specific to this occurrence of the
+            problem
+        type:
+          type: string
+          description: An absolute URI that identifies the problem type
+      required:
+        - title
+        - status
+    Submission:
+      type: object
+      description: A Submission
+      properties:
+        submissionId:
+          type: integer
+          description: Queue Id
+        submitter:
+          type: string
+          description: Submitter name
+    DockerSubmission:
+      type: object
+      description: A Docker Submission
+      properties:
+        submissionId:
+          type: integer
+          description: Queue Id
+        submitter:
+          type: string
+          description: Submitter name
+        docker:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Docker repository name
+            digest:
+              type: string
+              description: Docker digest
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        submissionId:
+          type: integer
+          description: Queue Id
+        submitter:
+          type: string
+          description: Submitter name
+        file:
+          type: string
+          description: File to submit to challenge
+    WorkflowSubmission:
+      type: object
+      description: A workflow Submission
+      properties:
+        submissionId:
+          type: integer
+          description: Queue Id
+        submitter:
+          type: string
+          description: Submitter name
+        workflow:
+          type: string
+          description: Workflow to run
+        workflowInputs:
+          type: string
+          description: Worklfow inputs
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: The request conflicts with current state of the target resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
