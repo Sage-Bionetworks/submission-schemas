@@ -1,9 +1,0 @@
-type: object
-description: A Submission
-properties:
-  submissionId:
-    type: integer
-    description: Queue Id
-  submitter:
-    type: string
-    description: Submitter name
