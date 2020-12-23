@@ -236,7 +236,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Submission"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DockerSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FileSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WorkflowSubmission"
+                  }
+                ]
               }
             }
           }
@@ -388,20 +398,6 @@
           "title",
           "status"
         ]
-      },
-      "Submission": {
-        "type": "object",
-        "description": "A Submission",
-        "properties": {
-          "submissionId": {
-            "type": "integer",
-            "description": "Queue Id"
-          },
-          "submitter": {
-            "type": "string",
-            "description": "Submitter name"
-          }
-        }
       },
       "DockerSubmission": {
         "type": "object",
