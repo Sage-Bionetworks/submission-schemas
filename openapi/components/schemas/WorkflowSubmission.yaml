@@ -7,6 +7,9 @@ properties:
   submitter:
     type: string
     description: Submitter name
+  queueId:
+    type: string
+    description: Queue Id
   workflow:
     type: string
     description: Workflow to run

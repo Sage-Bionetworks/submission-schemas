@@ -7,6 +7,9 @@ properties:
   submitter:
     type: string
     description: Submitter name
+  queueId:
+    type: string
+    description: Queue Id
   file:
     type: string
     description: File to submit to challenge

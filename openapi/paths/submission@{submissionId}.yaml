@@ -1,0 +1,75 @@
+parameters:
+  - in: path
+    name: submissionId
+    description: The ID of the submission
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Submission
+  summary: Get a submission by its ID
+  description: Returns the submission for a given ID
+  operationId: "getSubmission"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/DockerSubmission.yaml
+              - $ref: ../components/schemas/FileSubmission.yaml
+              - $ref: ../components/schemas/WorkflowSubmission.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+delete:
+  tags:
+    - Submission
+  summary: Delete a submission by its ID
+  description: Deletes the submission for a given ID
+  operationId: "deleteSubmission"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/DockerSubmission.yaml
+              - $ref: ../components/schemas/FileSubmission.yaml
+              - $ref: ../components/schemas/WorkflowSubmission.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+put:
+  tags:
+    - Submission
+  summary: Update a submission by its ID
+  description: Updates the submission for a given ID
+  operationId: "updateSubmission"
+  requestBody:
+    content:
+      application/json:
+        schema:
+            oneOf:
+              - $ref: ../components/schemas/DockerSubmission.yaml
+              - $ref: ../components/schemas/FileSubmission.yaml
+              - $ref: ../components/schemas/WorkflowSubmission.yaml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/DockerSubmission.yaml
+              - $ref: ../components/schemas/FileSubmission.yaml
+              - $ref: ../components/schemas/WorkflowSubmission.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
