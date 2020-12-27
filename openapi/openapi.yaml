@@ -34,3 +34,5 @@ paths:
     $ref: paths/queue@{queueId}.yaml
   /submission:
     $ref: paths/submission.yaml
+  /submission/{submissionId}:
+    $ref: paths/submission@{submissionId}.yaml
