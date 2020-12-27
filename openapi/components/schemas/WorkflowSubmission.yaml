@@ -10,6 +10,18 @@ properties:
   queueId:
     type: string
     description: Queue Id
+  status:
+    type: string
+    description: Submission status
+    enum:
+      - RECEIVED
+      - EVALUATION_IN_PROGRESS
+      - INVALID
+      - ACCEPTED
+      - REJECTED
+      - VALIDATED
+      - SCORED
+      - CANCELLED
   workflow:
     type: string
     description: Workflow to run
