@@ -449,7 +449,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubmissionStatus"
+                  "$ref": "#/components/schemas/SubmissionStatus-2"
                 }
               }
             }
@@ -579,23 +579,18 @@
         ]
       },
       "SubmissionStatus": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "description": "Submission status",
-            "enum": [
-              "RECEIVED",
-              "EVALUATION_IN_PROGRESS",
-              "INVALID",
-              "ACCEPTED",
-              "REJECTED",
-              "VALIDATED",
-              "SCORED",
-              "CANCELLED"
-            ]
-          }
-        }
+        "type": "string",
+        "description": "Submission status",
+        "enum": [
+          "RECEIVED",
+          "EVALUATION_IN_PROGRESS",
+          "INVALID",
+          "ACCEPTED",
+          "REJECTED",
+          "VALIDATED",
+          "SCORED",
+          "CANCELLED"
+        ]
       },
       "DockerSubmission": {
         "type": "object",
@@ -672,6 +667,9 @@
             "type": "string",
             "description": "Queue Id"
           },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
           "workflow": {
             "type": "string",
             "description": "Workflow to run"
@@ -679,23 +677,14 @@
           "workflowInputs": {
             "type": "string",
             "description": "Worklfow inputs"
-          },
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "description": "Submission status",
-              "enum": [
-                "RECEIVED",
-                "EVALUATION_IN_PROGRESS",
-                "INVALID",
-                "ACCEPTED",
-                "REJECTED",
-                "VALIDATED",
-                "SCORED",
-                "CANCELLED"
-              ]
-            }
+          }
+        }
+      },
+      "SubmissionStatus-2": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
           }
         }
       }
