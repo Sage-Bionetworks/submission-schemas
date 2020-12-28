@@ -24,6 +24,14 @@
       "name": "Queue"
     },
     {
+      "description": "Allow synapse submissions to interact with supported workflow engines",
+      "externalDocs": {
+        "description": "Mimics GA4GH",
+        "url": "https://github.com/ga4gh/workflow-execution-service-schemas"
+      },
+      "name": "Execution"
+    },
+    {
       "description": "Submission and its metadata",
       "externalDocs": {
         "description": "More about submission references",
@@ -477,7 +485,7 @@
       ],
       "post": {
         "tags": [
-          "Submission"
+          "Execution"
         ],
         "summary": "Executes a submission",
         "description": "Executes a submission",
