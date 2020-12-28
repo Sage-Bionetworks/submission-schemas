@@ -36,3 +36,5 @@ paths:
     $ref: paths/submission.yaml
   /submission/{submissionId}:
     $ref: paths/submission@{submissionId}.yaml
+  /submission/{submissionId}/status:
+    $ref: paths/status.yaml
