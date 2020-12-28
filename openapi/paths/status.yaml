@@ -17,11 +17,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              status:
-                type: string
-                description: Submission status
+            $ref: SubmissionStatus.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
