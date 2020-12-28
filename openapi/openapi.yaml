@@ -16,11 +16,11 @@ servers:
 tags:
   - description: Ceate and link synapse queues with workflow engines
     name: Queue
-  # - description: Allow synapse submissions to interact with supported workflow engines
-  #   externalDocs:
-  #     description: Mimics GA4GH
-  #     url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
-  #   name: workflow
+  - description: Allow synapse submissions to interact with supported workflow engines
+    externalDocs:
+      description: Mimics GA4GH
+      url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
+    name: Execution
   - description: Submission and its metadata
     externalDocs:
       description: More about submission references

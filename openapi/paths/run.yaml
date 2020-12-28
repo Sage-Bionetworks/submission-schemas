@@ -7,7 +7,7 @@ parameters:
       type: string
 post:
   tags:
-    - Submission
+    - Execution
   summary: Executes a submission
   description: Executes a submission
   operationId: "runSubmission"

@@ -1,0 +1,24 @@
+parameters:
+  - in: path
+    name: runId
+    description: The ID of the run
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Execution
+  summary: Get a submission run
+  description: Returns the run for a submission
+  operationId: "getSubmissionRun"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/RunId.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
