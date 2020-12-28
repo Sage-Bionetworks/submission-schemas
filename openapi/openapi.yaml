@@ -40,3 +40,7 @@ paths:
     $ref: paths/status.yaml
   /submission/{submissionId}/run:
     $ref: paths/run.yaml
+  /submission/{submissionId}/run/{runId}:
+    $ref: paths/run@{runId}.yaml
+  /submission/{submissionId}/run/{runId}/log:
+    $ref: paths/log.yaml

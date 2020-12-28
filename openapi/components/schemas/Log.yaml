@@ -1,5 +1,5 @@
-title: Log
 type: object
+description: Log and other info
 properties:
   name:
     type: string
@@ -24,5 +24,3 @@ properties:
   exit_code:
     type: integer
     description: Exit code of the program
-    format: int32
-description: Log and other info
