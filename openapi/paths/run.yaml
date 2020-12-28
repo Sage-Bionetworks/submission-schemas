@@ -1,0 +1,29 @@
+parameters:
+  - in: path
+    name: submissionId
+    description: The ID of the submission
+    required: true
+    schema:
+      type: string
+post:
+  tags:
+    - Submission
+  summary: Executes a submission
+  description: Executes a submission
+  operationId: "runSubmission"
+  requestBody:
+    content:
+      application/json: {}
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/runId.yaml
+      description: Success
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml

@@ -1,0 +1,5 @@
+type: object
+properties:
+  runId:
+    type: string
+    description: workflow run ID
