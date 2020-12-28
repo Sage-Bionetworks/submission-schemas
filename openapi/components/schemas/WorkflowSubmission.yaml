@@ -10,7 +10,8 @@ properties:
   queueId:
     type: string
     description: Queue Id
-  $ref: SubmissionStatus.yaml
+  status:
+    $ref: ../definitions/SubmissionStatus.yaml
   workflow:
     type: string
     description: Workflow to run

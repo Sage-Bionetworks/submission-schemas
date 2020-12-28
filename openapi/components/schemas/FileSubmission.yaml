@@ -11,7 +11,7 @@ properties:
     type: string
     description: Queue Id
   status:
-    $ref: SubmissionStatus.yaml
+    $ref: ../definitions/SubmissionStatus.yaml
   file:
     type: string
     description: File to submit to challenge
