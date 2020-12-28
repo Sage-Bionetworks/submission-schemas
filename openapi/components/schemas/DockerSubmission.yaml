@@ -11,17 +11,7 @@ properties:
     type: string
     description: Queue Id
   status:
-    type: string
-    description: Submission status
-    enum:
-      - RECEIVED
-      - EVALUATION_IN_PROGRESS
-      - INVALID
-      - ACCEPTED
-      - REJECTED
-      - VALIDATED
-      - SCORED
-      - CANCELLED
+    $ref: SubmissionStatus.yaml
   docker:
     type: object
     properties:
