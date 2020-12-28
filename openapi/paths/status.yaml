@@ -18,9 +18,10 @@ get:
         application/json:
           schema:
             type: object
-            status:
-              type: string
-              description: Submission status
+            properties:
+              status:
+                type: string
+                description: Submission status
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
