@@ -18,7 +18,7 @@ get:
         application/json:
           schema:
             status:
-              - $ref: ../components/schemas/SubmissionStatus.yaml
+              $ref: ../components/schemas/SubmissionStatus.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
