@@ -423,6 +423,45 @@
           }
         }
       }
+    },
+    "/submission/{submissionId}/status": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Get a submission's status",
+        "description": "Returns the submission's status for a given ID",
+        "operationId": "getSubmissionStatus",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionStatus"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -540,18 +579,23 @@
         ]
       },
       "SubmissionStatus": {
-        "type": "string",
-        "description": "Submission status",
-        "enum": [
-          "RECEIVED",
-          "EVALUATION_IN_PROGRESS",
-          "INVALID",
-          "ACCEPTED",
-          "REJECTED",
-          "VALIDATED",
-          "SCORED",
-          "CANCELLED"
-        ]
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Submission status",
+            "enum": [
+              "RECEIVED",
+              "EVALUATION_IN_PROGRESS",
+              "INVALID",
+              "ACCEPTED",
+              "REJECTED",
+              "VALIDATED",
+              "SCORED",
+              "CANCELLED"
+            ]
+          }
+        }
       },
       "DockerSubmission": {
         "type": "object",
@@ -628,9 +672,6 @@
             "type": "string",
             "description": "Queue Id"
           },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
           "workflow": {
             "type": "string",
             "description": "Workflow to run"
@@ -638,6 +679,23 @@
           "workflowInputs": {
             "type": "string",
             "description": "Worklfow inputs"
+          },
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "Submission status",
+              "enum": [
+                "RECEIVED",
+                "EVALUATION_IN_PROGRESS",
+                "INVALID",
+                "ACCEPTED",
+                "REJECTED",
+                "VALIDATED",
+                "SCORED",
+                "CANCELLED"
+              ]
+            }
           }
         }
       }
