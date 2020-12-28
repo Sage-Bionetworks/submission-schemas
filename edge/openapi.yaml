@@ -279,6 +279,36 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+  '/submission/{submissionId}/run':
+    parameters:
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    post:
+      tags:
+        - Submission
+      summary: Executes a submission
+      description: Executes a submission
+      operationId: runSubmission
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunId'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
 components:
   schemas:
     ListResponseMetadata:
@@ -442,6 +472,12 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/SubmissionStatus'
+    RunId:
+      type: object
+      properties:
+        runId:
+          type: string
+          description: workflow run ID
   responses:
     Unauthorized:
       description: Unauthorized
