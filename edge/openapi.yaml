@@ -178,6 +178,82 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
+  '/submission/{submissionId}':
+    parameters:
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Submission
+      summary: Get a submission by its ID
+      description: Returns the submission for a given ID
+      operationId: getSubmission
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Submission
+      summary: Delete a submission by its ID
+      description: Deletes the submission for a given ID
+      operationId: deleteSubmission
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Submission
+      summary: Update a submission by its ID
+      description: Updates the submission for a given ID
+      operationId: updateSubmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/DockerSubmission'
+                - $ref: '#/components/schemas/FileSubmission'
+                - $ref: '#/components/schemas/WorkflowSubmission'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
   schemas:
     ListResponseMetadata:
@@ -261,6 +337,18 @@ components:
       required:
         - title
         - status
+    SubmissionStatus:
+      type: string
+      description: Submission status
+      enum:
+        - RECEIVED
+        - EVALUATION_IN_PROGRESS
+        - INVALID
+        - ACCEPTED
+        - REJECTED
+        - VALIDATED
+        - SCORED
+        - CANCELLED
     DockerSubmission:
       type: object
       description: A Docker Submission
@@ -271,6 +359,11 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         docker:
           type: object
           properties:
@@ -290,6 +383,11 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         file:
           type: string
           description: File to submit to challenge
@@ -303,6 +401,11 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         workflow:
           type: string
           description: Workflow to run
