@@ -9,10 +9,10 @@ properties:
     items:
       type: string
     description: The command line that was executed
-  start_time:
+  startTime:
     type: string
     description: When the command started executing, in ISO 8601 format "%Y-%m-%dT%H:%M:%SZ"
-  end_time:
+  endTime:
     type: string
     description: When the command stopped executing (completed, failed, or cancelled), in ISO 8601 format "%Y-%m-%dT%H:%M:%SZ"
   stdout:
@@ -21,6 +21,6 @@ properties:
   stderr:
     type: string
     description: A URL to retrieve standard error logs of the workflow run or task.  This URL may change between status requests, or may not be available until the task or workflow has finished execution.  Should be available using the same credentials used to access the WES endpoint.
-  exit_code:
+  exitCode:
     type: integer
     description: Exit code of the program
