@@ -681,7 +681,7 @@ components:
         - $ref: '#/components/schemas/ListResponseMetadata'
         - type: object
           properties:
-            queues:
+            submissions:
               description: An array of queues
               type: array
               items:
