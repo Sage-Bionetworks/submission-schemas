@@ -298,6 +298,57 @@
             "$ref": "#/components/responses/Conflict"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "List the submitted submissions",
+        "description": "Returns the submissions from a queue",
+        "operationId": "listSubmissions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
       }
     },
     "/queue/{queueId}/submission/{submissionId}": {
@@ -934,31 +985,6 @@
           }
         }
       },
-      "FileSubmission": {
-        "type": "object",
-        "description": "A file Submission",
-        "properties": {
-          "submissionId": {
-            "type": "integer",
-            "description": "Queue Id"
-          },
-          "submitter": {
-            "type": "string",
-            "description": "Submitter name"
-          },
-          "queueId": {
-            "type": "string",
-            "description": "Queue Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
-          "file": {
-            "type": "string",
-            "description": "File to submit to challenge"
-          }
-        }
-      },
       "WorkflowSubmission": {
         "type": "object",
         "description": "A workflow Submission",
@@ -987,6 +1013,62 @@
             "description": "Worklfow inputs"
           }
         }
+      },
+      "FileSubmission": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "description": "Queue Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        }
+      },
+      "SubmissionListResponse": {
+        "type": "object",
+        "description": "A page of queues",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListResponseMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "queues": {
+                "description": "An array of queues",
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       "SubmissionStatus-2": {
         "type": "object",
