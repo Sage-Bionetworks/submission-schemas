@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Compute
+  summary: Create a compute environment
+  description: Creates a compute environment
+  operationId: "createComputeEnv"
+  requestBody:
+    content:
+      application/json:
+        schema:
+            oneOf:
+              - $ref: ../components/schemas/WesComputeEnv.yaml
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ComputeEnvId.yaml
+      description: Success
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml
