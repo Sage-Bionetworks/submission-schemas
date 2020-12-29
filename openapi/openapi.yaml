@@ -46,3 +46,5 @@ paths:
     $ref: paths/run@{runId}.yaml
   /submission/{submissionId}/run/{runId}/log:
     $ref: paths/log.yaml
+  /computeEnv:
+    $ref: paths/computeEnv.yaml
