@@ -1,0 +1,24 @@
+parameters:
+  - in: path
+    name: computeEnvId
+    description: The ID of the compute environment
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Compute
+  summary: Get a compute env by its ID
+  description: Returns the compute env for a given ID
+  operationId: "getComputeEnv"
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ComputeEnvId.yaml
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
