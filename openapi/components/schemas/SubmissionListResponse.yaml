@@ -4,7 +4,7 @@ allOf:
   - $ref: ../schemas/ListResponseMetadata.yaml
   - type: object
     properties:
-      queues:
+      submissions:
         description: An array of queues
         type: array
         items:
