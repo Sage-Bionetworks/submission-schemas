@@ -32,15 +32,9 @@ delete:
   description: Deletes the submission for a given ID
   operationId: "deleteSubmission"
   responses:
-    '200':
+    '204':
       description: Success
-      content:
-        application/json:
-          schema:
-            oneOf:
-              - $ref: ../components/schemas/DockerSubmission.yaml
-              - $ref: ../components/schemas/FileSubmission.yaml
-              - $ref: ../components/schemas/WorkflowSubmission.yaml
+      content: {}
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':

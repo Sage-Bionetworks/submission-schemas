@@ -28,3 +28,17 @@ get:
       $ref: ../components/responses/Unauthorized.yaml
     '404':
       $ref: ../components/responses/NotFound.yaml
+delete:
+  tags:
+    - Execution
+  summary: Delete a submission run
+  description: Deletes the run for a submission
+  operationId: "deleteSubmissionRun"
+  responses:
+    '204':
+      description: Success
+      content: {}
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
