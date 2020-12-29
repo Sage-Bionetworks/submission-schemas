@@ -16,6 +16,11 @@ servers:
 tags:
   - description: Ceate and link synapse queues with workflow engines
     name: Queue
+  - description: Allow synapse submissions to interact with supported workflow engines
+    externalDocs:
+      description: Mimics GA4GH
+      url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
+    name: Execution
   - description: Submission and its metadata
     externalDocs:
       description: More about submission references
@@ -178,6 +183,199 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
+  '/submission/{submissionId}':
+    parameters:
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Submission
+      summary: Get a submission by its ID
+      description: Returns the submission for a given ID
+      operationId: getSubmission
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Submission
+      summary: Delete a submission by its ID
+      description: Deletes the submission for a given ID
+      operationId: deleteSubmission
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Submission
+      summary: Update a submission by its ID
+      description: Updates the submission for a given ID
+      operationId: updateSubmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/DockerSubmission'
+                - $ref: '#/components/schemas/FileSubmission'
+                - $ref: '#/components/schemas/WorkflowSubmission'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/submission/{submissionId}/status':
+    parameters:
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Submission
+      summary: Get a submission's status
+      description: Returns the submission's status for a given ID
+      operationId: getSubmissionStatus
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionStatus-2'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/submission/{submissionId}/run':
+    parameters:
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    post:
+      tags:
+        - Execution
+      summary: Executes a submission
+      description: Executes a submission
+      operationId: runSubmission
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunId'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  '/submission/{submissionId}/run/{runId}':
+    parameters:
+      - in: path
+        name: runId
+        description: The ID of the run
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Execution
+      summary: Get a submission run
+      description: Returns the run for a submission
+      operationId: getSubmissionRun
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunId'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/submission/{submissionId}/run/{runId}/log':
+    parameters:
+      - in: path
+        name: runId
+        description: The ID of the run
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: submissionId
+        description: The ID of the submission
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Execution
+      summary: Get a submission's run logs
+      description: Returns the submission's logs for a given run ID.
+      operationId: getSubmissionLog
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
   schemas:
     ListResponseMetadata:
@@ -261,6 +459,18 @@ components:
       required:
         - title
         - status
+    SubmissionStatus:
+      type: string
+      description: Submission status
+      enum:
+        - RECEIVED
+        - EVALUATION_IN_PROGRESS
+        - INVALID
+        - ACCEPTED
+        - REJECTED
+        - VALIDATED
+        - SCORED
+        - CANCELLED
     DockerSubmission:
       type: object
       description: A Docker Submission
@@ -271,6 +481,11 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         docker:
           type: object
           properties:
@@ -290,6 +505,11 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         file:
           type: string
           description: File to submit to challenge
@@ -303,12 +523,69 @@ components:
         submitter:
           type: string
           description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
         workflow:
           type: string
           description: Workflow to run
         workflowInputs:
           type: string
           description: Worklfow inputs
+    SubmissionStatus-2:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+    RunId:
+      type: object
+      properties:
+        runId:
+          type: string
+          description: workflow run ID
+    Log:
+      type: object
+      description: Log and other info
+      properties:
+        name:
+          type: string
+          description: The task or workflow name
+        cmd:
+          type: array
+          items:
+            type: string
+          description: The command line that was executed
+        startTime:
+          type: string
+          description: >-
+            When the command started executing, in ISO 8601 format
+            "%Y-%m-%dT%H:%M:%SZ"
+        endTime:
+          type: string
+          description: >-
+            When the command stopped executing (completed, failed, or
+            cancelled), in ISO 8601 format "%Y-%m-%dT%H:%M:%SZ"
+        stdout:
+          type: string
+          description: >-
+            A URL to retrieve standard output logs of the workflow run or task. 
+            This URL may change between status requests, or may not be available
+            until the task or workflow has finished execution.  Should be
+            available using the same credentials used to access the WES
+            endpoint.
+        stderr:
+          type: string
+          description: >-
+            A URL to retrieve standard error logs of the workflow run or task. 
+            This URL may change between status requests, or may not be available
+            until the task or workflow has finished execution.  Should be
+            available using the same credentials used to access the WES
+            endpoint.
+        exitCode:
+          type: integer
+          description: Exit code of the program
   responses:
     Unauthorized:
       description: Unauthorized
