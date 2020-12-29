@@ -1,5 +1,11 @@
 parameters:
   - in: path
+    name: queueId
+    description: The ID of the queue
+    required: true
+    schema:
+      type: string
+  - in: path
     name: submissionId
     description: The ID of the submission
     required: true

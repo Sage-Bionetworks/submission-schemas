@@ -1,3 +1,10 @@
+parameters:
+  - in: path
+    name: queueId
+    description: The ID of the queue
+    required: true
+    schema:
+      type: string
 post:
   tags:
     - Submission
