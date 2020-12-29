@@ -24,6 +24,10 @@
       "name": "Queue"
     },
     {
+      "description": "Compute environment",
+      "name": "Compute"
+    },
+    {
       "description": "Allow synapse submissions to interact with supported workflow engines",
       "externalDocs": {
         "description": "Mimics GA4GH",
