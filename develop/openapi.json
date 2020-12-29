@@ -1,0 +1,1099 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "contact": {
+      "email": "thomas.yu@sagebionetworks.org"
+    },
+    "description": "This is the submission API to obtain the metadata of the submission\nand send the submission to execute in the right workflow environment\n",
+    "license": {
+      "name": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "challenge.org",
+    "title": "Submission API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Ceate and link synapse queues with workflow engines",
+      "name": "Queue"
+    },
+    {
+      "description": "Compute environment",
+      "name": "Compute"
+    },
+    {
+      "description": "Allow synapse submissions to interact with supported workflow engines",
+      "externalDocs": {
+        "description": "Mimics GA4GH",
+        "url": "https://github.com/ga4gh/workflow-execution-service-schemas"
+      },
+      "name": "Execution"
+    },
+    {
+      "description": "Submission and its metadata",
+      "externalDocs": {
+        "description": "More about submission references",
+        "url": "https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController"
+      },
+      "name": "Submission"
+    }
+  ],
+  "paths": {
+    "/queue": {
+      "post": {
+        "tags": [
+          "Queue"
+        ],
+        "summary": "Create a queue",
+        "description": "Creates a queue for storing and running of submissions",
+        "operationId": "createQueue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Queue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Queue"
+        ],
+        "summary": "List the available queues",
+        "description": "Returns the queues",
+        "operationId": "listQueues",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Queue"
+        ],
+        "summary": "Get a queue by its ID",
+        "description": "Returns the queue for a given ID",
+        "operationId": "getQueue",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Queue"
+        ],
+        "summary": "Delete a queue by its ID",
+        "description": "Deletes the queue for a given ID",
+        "operationId": "deleteQueue",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Queue"
+        ],
+        "summary": "Update a queue by its ID",
+        "description": "Updates the queue for a given ID",
+        "operationId": "updateQueue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Queue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Create a submission",
+        "description": "Creates a submission",
+        "operationId": "createSubmission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DockerSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FileSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WorkflowSubmission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission/{submissionId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Get a submission by its ID",
+        "description": "Returns the submission for a given ID",
+        "operationId": "getSubmission",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Delete a submission by its ID",
+        "description": "Deletes the submission for a given ID",
+        "operationId": "deleteSubmission",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Update a submission by its ID",
+        "description": "Updates the submission for a given ID",
+        "operationId": "updateSubmission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DockerSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FileSubmission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WorkflowSubmission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission/{submissionId}/status": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Get a submission's status",
+        "description": "Returns the submission's status for a given ID",
+        "operationId": "getSubmissionStatus",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionStatus-2"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission/{submissionId}/run": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Executes a submission",
+        "description": "Executes a submission",
+        "operationId": "runSubmission",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunId"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission/{submissionId}/run/{runId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "runId",
+          "description": "The ID of the run",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Get a submission run",
+        "description": "Returns the run for a submission",
+        "operationId": "getSubmissionRun",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunId"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Delete a submission run",
+        "description": "Deletes the run for a submission",
+        "operationId": "deleteSubmissionRun",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queue/{queueId}/submission/{submissionId}/run/{runId}/log": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "runId",
+          "description": "The ID of the run",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Get a submission's run logs",
+        "description": "Returns the submission's logs for a given run ID.",
+        "operationId": "getSubmissionLog",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Log"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/computeEnv": {
+      "post": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Create a compute environment",
+        "description": "Creates a compute environment",
+        "operationId": "createComputeEnv",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/WesComputeEnv"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComputeEnvId"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/computeEnv/{computeEnvId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "computeEnvId",
+          "description": "The ID of the compute environment",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Get a compute env by its ID",
+        "description": "Returns the compute env for a given ID",
+        "operationId": "getComputeEnv",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComputeEnvId"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Delete a compute environment by its ID",
+        "description": "Deletes the compute environment for a given ID",
+        "operationId": "deleteComputeEnv",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ListResponseMetadata": {
+        "type": "object",
+        "description": "A page of results",
+        "properties": {
+          "offset": {
+            "description": "Index of the first result that must be returned",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "Maximum number of results returned",
+            "type": "integer"
+          },
+          "links": {
+            "description": "Links to navigate to different pages of results",
+            "type": "object",
+            "properties": {
+              "next": {
+                "description": "Link to the next page of results",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "offset",
+          "limit",
+          "links"
+        ]
+      },
+      "Queue": {
+        "type": "object",
+        "description": "A Queue to link submissions to runtime",
+        "properties": {
+          "queueId": {
+            "type": "integer",
+            "description": "Queue Id"
+          },
+          "wesApiHost": {
+            "default": "local",
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
+          },
+          "workflowFiles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Workflow/Tool files and templates"
+          },
+          "workflowInput": {
+            "description": "Path to workflow inputs",
+            "type": "string"
+          },
+          "submissionType": {
+            "description": "Path to workflow inputs",
+            "type": "string",
+            "enum": [
+              "docker",
+              "file",
+              "workflow",
+              "workflow_inputs"
+            ]
+          }
+        }
+      },
+      "QueueListResponse": {
+        "type": "object",
+        "description": "A page of queues",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListResponseMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "queues": {
+                "description": "An array of queues",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "description": "Problem details (tools.ietf.org/html/rfc7807)",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "A human readable documentation for the problem type"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code"
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human readable explanation specific to this occurrence of the problem"
+          },
+          "type": {
+            "type": "string",
+            "description": "An absolute URI that identifies the problem type"
+          }
+        },
+        "required": [
+          "title",
+          "status"
+        ]
+      },
+      "SubmissionStatus": {
+        "type": "string",
+        "description": "Submission status",
+        "enum": [
+          "RECEIVED",
+          "EVALUATION_IN_PROGRESS",
+          "INVALID",
+          "ACCEPTED",
+          "REJECTED",
+          "VALIDATED",
+          "SCORED",
+          "CANCELLED"
+        ]
+      },
+      "DockerSubmission": {
+        "type": "object",
+        "description": "A Docker Submission",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "description": "Queue Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "docker": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Docker repository name"
+              },
+              "digest": {
+                "type": "string",
+                "description": "Docker digest"
+              }
+            }
+          }
+        }
+      },
+      "FileSubmission": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "description": "Queue Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        }
+      },
+      "WorkflowSubmission": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "description": "Queue Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "workflow": {
+            "type": "string",
+            "description": "Workflow to run"
+          },
+          "workflowInputs": {
+            "type": "string",
+            "description": "Worklfow inputs"
+          }
+        }
+      },
+      "SubmissionStatus-2": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          }
+        }
+      },
+      "RunId": {
+        "type": "object",
+        "properties": {
+          "runId": {
+            "type": "string",
+            "description": "workflow run ID"
+          }
+        }
+      },
+      "Log": {
+        "type": "object",
+        "description": "Log and other info",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The task or workflow name"
+          },
+          "cmd": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The command line that was executed"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "When the command started executing, in ISO 8601 format \"%Y-%m-%dT%H:%M:%SZ\""
+          },
+          "endTime": {
+            "type": "string",
+            "description": "When the command stopped executing (completed, failed, or cancelled), in ISO 8601 format \"%Y-%m-%dT%H:%M:%SZ\""
+          },
+          "stdout": {
+            "type": "string",
+            "description": "A URL to retrieve standard output logs of the workflow run or task.  This URL may change between status requests, or may not be available until the task or workflow has finished execution.  Should be available using the same credentials used to access the WES endpoint."
+          },
+          "stderr": {
+            "type": "string",
+            "description": "A URL to retrieve standard error logs of the workflow run or task.  This URL may change between status requests, or may not be available until the task or workflow has finished execution.  Should be available using the same credentials used to access the WES endpoint."
+          },
+          "exitCode": {
+            "type": "integer",
+            "description": "Exit code of the program"
+          }
+        }
+      },
+      "WesComputeEnv": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "wesApiHost": {
+            "default": "local",
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
+          }
+        }
+      },
+      "ComputeEnvId": {
+        "type": "object",
+        "properties": {
+          "computeEnvId": {
+            "type": "string",
+            "description": "workflow run ID"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The specified resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "The request conflicts with current state of the target resource",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
