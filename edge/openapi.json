@@ -178,15 +178,8 @@
         "description": "Deletes the queue for a given ID",
         "operationId": "deleteQueue",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Queue"
-                }
-              }
-            }
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
@@ -348,25 +341,8 @@
         "description": "Deletes the submission for a given ID",
         "operationId": "deleteSubmission",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
-                }
-              }
-            }
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
@@ -556,6 +532,25 @@
                 }
               }
             }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Delete a submission run",
+        "description": "Deletes the run for a submission",
+        "operationId": "deleteSubmissionRun",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
