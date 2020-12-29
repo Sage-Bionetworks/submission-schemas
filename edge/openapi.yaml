@@ -380,6 +380,32 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+  /computeEnv:
+    post:
+      tags:
+        - Compute
+      summary: Create a compute environment
+      description: Creates a compute environment
+      operationId: createComputeEnv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/WesComputeEnv'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputeEnvId'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
 components:
   schemas:
     ListResponseMetadata:
@@ -590,6 +616,20 @@ components:
         exitCode:
           type: integer
           description: Exit code of the program
+    WesComputeEnv:
+      type: object
+      description: A workflow Submission
+      properties:
+        wesApiHost:
+          default: local
+          type: string
+          description: Workflow Execution Service implementation endpoint
+    ComputeEnvId:
+      type: object
+      properties:
+        computeEnvId:
+          type: string
+          description: workflow run ID
   responses:
     Unauthorized:
       description: Unauthorized
