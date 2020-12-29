@@ -29,12 +29,9 @@ delete:
   description: Deletes the queue for a given ID
   operationId: "deleteQueue"
   responses:
-    '200':
+    '204':
       description: Success
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Queue.yaml
+      content: {}
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
