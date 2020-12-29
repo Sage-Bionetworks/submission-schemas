@@ -4,8 +4,9 @@ allOf:
   - $ref: ListResponseMetadata.yaml
   - type: object
     properties:
-      queues:
+      computeEnvs:
         description: An array of queues
         type: array
         items:
-          $ref: Queue.yaml
+          oneOf:
+            - $ref: WesComputeEnv.yaml
