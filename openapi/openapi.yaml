@@ -48,3 +48,5 @@ paths:
     $ref: paths/log.yaml
   /computeEnv:
     $ref: paths/computeEnv.yaml
+  /computeEnv/{computeEnvId}:
+    $ref: paths/computeEnv@{computeEnvId}.yaml

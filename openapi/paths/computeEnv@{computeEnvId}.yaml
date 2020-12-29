@@ -22,3 +22,16 @@ get:
       $ref: ../components/responses/Unauthorized.yaml
     '404':
       $ref: ../components/responses/NotFound.yaml
+delete:
+  tags:
+    - Compute
+  summary: Delete a compute environment by its ID
+  description: Deletes the compute environment for a given ID
+  operationId: "deleteComputeEnv"
+  responses:
+    '204':
+      description: The resource was deleted successfully.
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
