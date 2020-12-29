@@ -33,8 +33,7 @@ delete:
   operationId: "deleteSubmission"
   responses:
     '204':
-      description: Success
-      content: {}
+      description: The resource was deleted successfully.
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
