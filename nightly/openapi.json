@@ -24,6 +24,10 @@
       "name": "Queue"
     },
     {
+      "description": "Compute environment",
+      "name": "Compute"
+    },
+    {
       "description": "Allow synapse submissions to interact with supported workflow engines",
       "externalDocs": {
         "description": "Mimics GA4GH",
@@ -178,15 +182,8 @@
         "description": "Deletes the queue for a given ID",
         "operationId": "deleteQueue",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Queue"
-                }
-              }
-            }
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
@@ -348,25 +345,8 @@
         "description": "Deletes the submission for a given ID",
         "operationId": "deleteSubmission",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
-                }
-              }
-            }
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
@@ -564,6 +544,25 @@
             "$ref": "#/components/responses/NotFound"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Delete a submission run",
+        "description": "Deletes the run for a submission",
+        "operationId": "deleteSubmissionRun",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
       }
     },
     "/submission/{submissionId}/run/{runId}/log": {
@@ -604,6 +603,159 @@
                 }
               }
             }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/computeEnv": {
+      "post": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Create a compute environment",
+        "description": "Creates a compute environment",
+        "operationId": "createComputeEnv",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/WesComputeEnv"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComputeEnvId"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "List the available compute environments",
+        "description": "Returns the available compute environments",
+        "operationId": "listComputeEnvs",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComputeEnvListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/computeEnv/{computeEnvId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "computeEnvId",
+          "description": "The ID of the compute environment",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Get a compute env by its ID",
+        "description": "Returns the compute env for a given ID",
+        "operationId": "getComputeEnv",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComputeEnvId"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Compute"
+        ],
+        "summary": "Delete a compute environment by its ID",
+        "description": "Deletes the compute environment for a given ID",
+        "operationId": "deleteComputeEnv",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
           },
           "403": {
             "$ref": "#/components/responses/Unauthorized"
@@ -882,6 +1034,51 @@
           "exitCode": {
             "type": "integer",
             "description": "Exit code of the program"
+          }
+        }
+      },
+      "WesComputeEnv": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "wesApiHost": {
+            "default": "local",
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
+          }
+        }
+      },
+      "ComputeEnvListResponse": {
+        "type": "object",
+        "description": "A page of queues",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListResponseMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "computeEnvs": {
+                "description": "An array of queues",
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/WesComputeEnv"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ComputeEnvId": {
+        "type": "object",
+        "properties": {
+          "computeEnvId": {
+            "type": "string",
+            "description": "workflow run ID"
           }
         }
       }
