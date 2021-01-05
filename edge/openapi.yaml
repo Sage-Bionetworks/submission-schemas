@@ -150,7 +150,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /submission:
+  '/queue/{queueId}/submission':
+    parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
     post:
       tags:
         - Submission
@@ -181,8 +188,49 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
-  '/submission/{submissionId}':
+    get:
+      tags:
+        - Submission
+      summary: List the submitted submissions
+      description: Returns the submissions from a queue
+      operationId: listSubmissions
+      parameters:
+        - in: query
+          name: limit
+          description: Maximum number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 10
+            maximum: 100
+        - in: query
+          name: offset
+          description: Index of the first result that must be returned
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionListResponse'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/queue/{queueId}/submission/{submissionId}':
     parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
       - in: path
         name: submissionId
         description: The ID of the submission
@@ -250,8 +298,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/submission/{submissionId}/status':
+  '/queue/{queueId}/submission/{submissionId}/status':
     parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
       - in: path
         name: submissionId
         description: The ID of the submission
@@ -275,8 +329,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/submission/{submissionId}/run':
+  '/queue/{queueId}/submission/{submissionId}/run':
     parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
       - in: path
         name: submissionId
         description: The ID of the submission
@@ -305,8 +365,14 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
-  '/submission/{submissionId}/run/{runId}':
+  '/queue/{queueId}/submission/{submissionId}/run/{runId}':
     parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
       - in: path
         name: runId
         description: The ID of the run
@@ -349,8 +415,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/submission/{submissionId}/run/{runId}/log':
+  '/queue/{queueId}/submission/{submissionId}/run/{runId}/log':
     parameters:
+      - in: path
+        name: queueId
+        description: The ID of the queue
+        required: true
+        schema:
+          type: string
       - in: path
         name: runId
         description: The ID of the run
@@ -598,24 +670,6 @@ components:
             digest:
               type: string
               description: Docker digest
-    FileSubmission:
-      type: object
-      description: A file Submission
-      properties:
-        submissionId:
-          type: integer
-          description: Queue Id
-        submitter:
-          type: string
-          description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
-        file:
-          type: string
-          description: File to submit to challenge
     WorkflowSubmission:
       type: object
       description: A workflow Submission
@@ -637,6 +691,39 @@ components:
         workflowInputs:
           type: string
           description: Worklfow inputs
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        submissionId:
+          type: integer
+          description: Queue Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
+    SubmissionListResponse:
+      type: object
+      description: A page of queues
+      allOf:
+        - $ref: '#/components/schemas/ListResponseMetadata'
+        - type: object
+          properties:
+            submissions:
+              description: An array of queues
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
     SubmissionStatus-2:
       type: object
       properties:
