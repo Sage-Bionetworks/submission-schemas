@@ -654,13 +654,15 @@ components:
       properties:
         submissionId:
           type: integer
-          description: Queue Id
+          description: Submission Id
+          readOnly: true
         submitter:
           type: string
           description: Submitter name
         queueId:
           type: string
           description: Queue Id
+          writeOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         docker:
@@ -678,13 +680,15 @@ components:
       properties:
         submissionId:
           type: integer
-          description: Queue Id
+          description: Submission Id
+          readOnly: true
         submitter:
           type: string
           description: Submitter name
         queueId:
           type: string
           description: Queue Id
+          writeOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         workflow:
@@ -699,13 +703,15 @@ components:
       properties:
         submissionId:
           type: integer
-          description: Queue Id
+          description: Submission Id
+          readOnly: true
         submitter:
           type: string
           description: Submitter name
         queueId:
           type: string
           description: Queue Id
+          writeOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         file:

@@ -1013,7 +1013,8 @@
         "properties": {
           "submissionId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Submission Id",
+            "readOnly": true
           },
           "submitter": {
             "type": "string",
@@ -1021,7 +1022,8 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "writeOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1047,7 +1049,8 @@
         "properties": {
           "submissionId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Submission Id",
+            "readOnly": true
           },
           "submitter": {
             "type": "string",
@@ -1055,7 +1058,8 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "writeOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1076,7 +1080,8 @@
         "properties": {
           "submissionId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Submission Id",
+            "readOnly": true
           },
           "submitter": {
             "type": "string",
@@ -1084,7 +1089,8 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "writeOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
