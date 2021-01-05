@@ -1,0 +1,14 @@
+type: object
+description: A page of queues
+allOf:
+  - $ref: ../schemas/ListResponseMetadata.yaml
+  - type: object
+    properties:
+      submissions:
+        description: An array of queues
+        type: array
+        items:
+          oneOf:
+            - $ref: DockerSubmission.yaml
+            - $ref: WorkflowSubmission.yaml
+            - $ref: FileSubmission.yaml
