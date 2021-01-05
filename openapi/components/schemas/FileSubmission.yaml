@@ -3,13 +3,15 @@ description: A file Submission
 properties:
   submissionId:
     type: integer
-    description: Queue Id
+    description: Submission Id
+    readOnly: true
   submitter:
     type: string
     description: Submitter name
   queueId:
     type: string
     description: Queue Id
+    writeOnly: true
   status:
     $ref: ../definitions/SubmissionStatus.yaml
   file:
