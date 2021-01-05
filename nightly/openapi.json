@@ -229,7 +229,18 @@
         }
       }
     },
-    "/submission": {
+    "/queue/{queueId}/submission": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
       "post": {
         "tags": [
           "Submission"
@@ -287,10 +298,70 @@
             "$ref": "#/components/responses/Conflict"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "List the submitted submissions",
+        "description": "Returns the submissions from a queue",
+        "operationId": "listSubmissions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of results returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Index of the first result that must be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionListResponse"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
       }
     },
-    "/submission/{submissionId}": {
+    "/queue/{queueId}/submission/{submissionId}": {
       "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
         {
           "in": "path",
           "name": "submissionId",
@@ -412,8 +483,17 @@
         }
       }
     },
-    "/submission/{submissionId}/status": {
+    "/queue/{queueId}/submission/{submissionId}/status": {
       "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
         {
           "in": "path",
           "name": "submissionId",
@@ -451,8 +531,17 @@
         }
       }
     },
-    "/submission/{submissionId}/run": {
+    "/queue/{queueId}/submission/{submissionId}/run": {
       "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
         {
           "in": "path",
           "name": "submissionId",
@@ -498,8 +587,17 @@
         }
       }
     },
-    "/submission/{submissionId}/run/{runId}": {
+    "/queue/{queueId}/submission/{submissionId}/run/{runId}": {
       "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
         {
           "in": "path",
           "name": "runId",
@@ -565,8 +663,17 @@
         }
       }
     },
-    "/submission/{submissionId}/run/{runId}/log": {
+    "/queue/{queueId}/submission/{submissionId}/run/{runId}/log": {
       "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
         {
           "in": "path",
           "name": "runId",
@@ -733,7 +840,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ComputeEnvId"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/WesComputeEnv"
+                    }
+                  ]
                 }
               }
             }
@@ -804,12 +915,12 @@
         "properties": {
           "queueId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "readOnly": true
           },
-          "wesApiHost": {
-            "default": "local",
+          "computeId": {
             "type": "string",
-            "description": "Workflow Execution Service implementation endpoint"
+            "description": "Compute Environment Id"
           },
           "workflowFiles": {
             "items": {
@@ -901,7 +1012,8 @@
         "properties": {
           "submissionId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Submission Id",
+            "readOnly": true
           },
           "submitter": {
             "type": "string",
@@ -909,7 +1021,8 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "writeOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -929,38 +1042,14 @@
           }
         }
       },
-      "FileSubmission": {
-        "type": "object",
-        "description": "A file Submission",
-        "properties": {
-          "submissionId": {
-            "type": "integer",
-            "description": "Queue Id"
-          },
-          "submitter": {
-            "type": "string",
-            "description": "Submitter name"
-          },
-          "queueId": {
-            "type": "string",
-            "description": "Queue Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
-          "file": {
-            "type": "string",
-            "description": "File to submit to challenge"
-          }
-        }
-      },
       "WorkflowSubmission": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
           "submissionId": {
             "type": "integer",
-            "description": "Queue Id"
+            "description": "Submission Id",
+            "readOnly": true
           },
           "submitter": {
             "type": "string",
@@ -968,7 +1057,8 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id"
+            "description": "Queue Id",
+            "writeOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -982,6 +1072,64 @@
             "description": "Worklfow inputs"
           }
         }
+      },
+      "FileSubmission": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "description": "Submission Id",
+            "readOnly": true
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id",
+            "writeOnly": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        }
+      },
+      "SubmissionListResponse": {
+        "type": "object",
+        "description": "A page of queues",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListResponseMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "submissions": {
+                "description": "An array of queues",
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       "SubmissionStatus-2": {
         "type": "object",
@@ -1042,7 +1190,7 @@
         "description": "A workflow Submission",
         "properties": {
           "wesApiHost": {
-            "default": "local",
+            "default": "localhost:8080",
             "type": "string",
             "description": "Workflow Execution Service implementation endpoint"
           }
