@@ -6,7 +6,6 @@ properties:
     description: Queue Id
     readOnly: true
   computeId:
-    default: local
     type: string
     description: Compute Environment Id
   workflowFiles:

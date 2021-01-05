@@ -2,6 +2,6 @@ type: object
 description: A workflow Submission
 properties:
   wesApiHost:
-    default: local
+    default: localhost:8080
     type: string
     description: Workflow Execution Service implementation endpoint
