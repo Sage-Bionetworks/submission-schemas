@@ -533,7 +533,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComputeEnvId'
+                oneOf:
+                  - $ref: '#/components/schemas/WesComputeEnv'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -578,13 +579,14 @@ components:
       type: object
       description: A Queue to link submissions to runtime
       properties:
-        queueId:
+        id:
           type: integer
           description: Queue Id
-        wesApiHost:
+          readOnly: true
+        computeId:
           default: local
           type: string
-          description: Workflow Execution Service implementation endpoint
+          description: Compute Environment Id
         workflowFiles:
           items:
             type: string
