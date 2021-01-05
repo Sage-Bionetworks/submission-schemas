@@ -1,13 +1,14 @@
 type: object
 description: A Queue to link submissions to runtime
 properties:
-  queueId:
+  id:
     type: integer
     description: Queue Id
-  wesApiHost:
+    readOnly: true
+  computeId:
     default: local
     type: string
-    description: Workflow Execution Service implementation endpoint
+    description: Compute Environment Id
   workflowFiles:
     items:
       type: string

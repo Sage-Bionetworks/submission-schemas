@@ -17,7 +17,8 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ComputeEnvId.yaml
+            oneOf:
+              - $ref: ../components/schemas/WesComputeEnv.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
