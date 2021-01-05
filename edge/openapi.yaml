@@ -579,7 +579,7 @@ components:
       type: object
       description: A Queue to link submissions to runtime
       properties:
-        id:
+        queueId:
           type: integer
           description: Queue Id
           readOnly: true
