@@ -584,7 +584,6 @@ components:
           description: Queue Id
           readOnly: true
         computeId:
-          default: local
           type: string
           description: Compute Environment Id
         workflowFiles:
@@ -789,7 +788,7 @@ components:
       description: A workflow Submission
       properties:
         wesApiHost:
-          default: local
+          default: 'localhost:8080'
           type: string
           description: Workflow Execution Service implementation endpoint
     ComputeEnvListResponse:
