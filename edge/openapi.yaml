@@ -666,7 +666,7 @@ components:
         queueId:
           type: string
           description: Queue Id
-          writeOnly: true
+          readOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         docker:
@@ -692,7 +692,7 @@ components:
         queueId:
           type: string
           description: Queue Id
-          writeOnly: true
+          readOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         workflow:
@@ -715,7 +715,7 @@ components:
         queueId:
           type: string
           description: Queue Id
-          writeOnly: true
+          readOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         file:
@@ -815,6 +815,7 @@ components:
         computeEnvId:
           type: string
           description: workflow run ID
+          readOnly: true
   responses:
     Unauthorized:
       description: Unauthorized

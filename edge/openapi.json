@@ -1026,7 +1026,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1062,7 +1062,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1093,7 +1093,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1230,7 +1230,8 @@
         "properties": {
           "computeEnvId": {
             "type": "string",
-            "description": "workflow run ID"
+            "description": "workflow run ID",
+            "readOnly": true
           }
         }
       }
