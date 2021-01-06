@@ -20,3 +20,7 @@ properties:
   file:
     type: string
     description: File to submit to challenge
+required:
+  - name
+  - submitter
+  - file

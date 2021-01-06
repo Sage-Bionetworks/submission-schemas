@@ -23,3 +23,6 @@ properties:
   workflowInputs:
     type: string
     description: Worklfow inputs
+required:
+  - name
+  - submitter
