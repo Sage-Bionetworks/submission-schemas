@@ -1,6 +1,9 @@
 type: object
 description: A file Submission
 properties:
+  name:
+    type: string
+    description: Name of submission
   submissionId:
     type: integer
     description: Submission Id
