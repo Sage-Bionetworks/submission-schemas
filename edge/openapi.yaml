@@ -681,6 +681,17 @@ components:
             digest:
               type: string
               description: Docker digest
+            entrypoint:
+              type: string
+              description: >-
+                Docker entrypoint.  The default assumes that the docker image is
+                built with a predefined entrypoint.
+          required:
+            - name
+            - digest
+      required:
+        - name
+        - submitter
     WorkflowSubmission:
       type: object
       description: A workflow Submission
@@ -801,6 +812,9 @@ components:
       type: object
       description: A workflow Submission
       properties:
+        name:
+          type: string
+          description: Name of compute environment
         wesApiHost:
           default: 'localhost:8080'
           type: string
