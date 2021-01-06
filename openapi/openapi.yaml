@@ -52,3 +52,5 @@ paths:
     $ref: paths/computeEnvs.yaml
   /computeEnvs/{computeEnvId}:
     $ref: paths/computeEnvs@{computeEnvId}.yaml
+  /teams:
+    $ref: paths/teams.yaml

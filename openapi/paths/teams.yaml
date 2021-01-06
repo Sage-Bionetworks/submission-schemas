@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Team
+  summary: Create a Team
+  description: Creates a team for submitting
+  operationId: "createTeam"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Team.yaml
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Team.yaml
+      description: Success
+    '403':
+      $ref: ../components/responses/Unauthorized.yaml
+    '404':
+      $ref: ../components/responses/NotFound.yaml
+    '409':
+      $ref: ../components/responses/Conflict.yaml
