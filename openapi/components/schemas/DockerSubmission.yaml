@@ -26,4 +26,12 @@ properties:
       digest:
         type: string
         description: Docker digest
-
+      entrypoint:
+        type: string
+        description: Docker entrypoint.  The default assumes that the docker image is built with a predefined entrypoint.
+    required:
+      - name
+      - digest
+required:
+  - name
+  - submitter

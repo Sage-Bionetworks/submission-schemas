@@ -1,6 +1,9 @@
 type: object
 description: A workflow Submission
 properties:
+  name:
+    type: string
+    description: Name of compute environment
   wesApiHost:
     default: localhost:8080
     type: string
