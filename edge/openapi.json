@@ -918,6 +918,10 @@
             "description": "Queue Id",
             "readOnly": true
           },
+          "name": {
+            "type": "string",
+            "description": "Name of Queue"
+          },
           "computeId": {
             "type": "string",
             "description": "Compute Environment Id"
