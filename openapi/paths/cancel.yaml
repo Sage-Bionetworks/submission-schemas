@@ -17,19 +17,18 @@ parameters:
     required: true
     schema:
       type: string
-get:
+post:
   tags:
     - Execution
-  summary: Get a submission's run logs
-  description: Returns the submission's logs for a given run ID. This is dependant on how the compute environment returns logs.
-  operationId: "getSubmissionRunLog"
+  summary: Cancels a submission's run
+  description: Cancels the submission's run for a given run ID. This is dependant on how the compute environment cancels runs.
+  operationId: "cancelSubmissionRun"
+  requestBody:
+    content:
+      application/json: {}
   responses:
-    '200':
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Log.yaml
+    '204':
+      description: The run was cancelled.
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
