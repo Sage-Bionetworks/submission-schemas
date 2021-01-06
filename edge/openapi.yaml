@@ -692,6 +692,7 @@ components:
       required:
         - name
         - submitter
+        - docker
     WorkflowSubmission:
       type: object
       description: A workflow Submission
@@ -718,6 +719,9 @@ components:
         workflowInputs:
           type: string
           description: Worklfow inputs
+      required:
+        - name
+        - submitter
     FileSubmission:
       type: object
       description: A file Submission
@@ -741,6 +745,10 @@ components:
         file:
           type: string
           description: File to submit to challenge
+      required:
+        - name
+        - submitter
+        - file
     SubmissionListResponse:
       type: object
       description: A page of queues

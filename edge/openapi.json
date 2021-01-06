@@ -1059,7 +1059,8 @@
         },
         "required": [
           "name",
-          "submitter"
+          "submitter",
+          "docker"
         ]
       },
       "WorkflowSubmission": {
@@ -1095,7 +1096,11 @@
             "type": "string",
             "description": "Worklfow inputs"
           }
-        }
+        },
+        "required": [
+          "name",
+          "submitter"
+        ]
       },
       "FileSubmission": {
         "type": "object",
@@ -1126,7 +1131,12 @@
             "type": "string",
             "description": "File to submit to challenge"
           }
-        }
+        },
+        "required": [
+          "name",
+          "submitter",
+          "file"
+        ]
       },
       "SubmissionListResponse": {
         "type": "object",
