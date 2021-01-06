@@ -1315,6 +1315,10 @@
           "exitCode": {
             "type": "integer",
             "description": "Exit code of the program"
+          },
+          "output": {
+            "type": "string",
+            "description": "Output of workflow"
           }
         }
       },
