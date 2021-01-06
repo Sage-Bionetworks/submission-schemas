@@ -592,6 +592,31 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+  /teams:
+    post:
+      tags:
+        - Team
+      summary: Create a Team
+      description: Creates a team for submitting
+      operationId: createTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Success
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
 components:
   schemas:
     ListResponseMetadata:
@@ -885,6 +910,19 @@ components:
           type: string
           description: workflow run ID
           readOnly: true
+    Team:
+      type: object
+      properties:
+        teamId:
+          type: string
+          description: workflow run ID
+          readOnly: true
+        name:
+          type: string
+          description: Name of team
+        description:
+          type: string
+          description: Description of Team
   responses:
     Unauthorized:
       description: Unauthorized
