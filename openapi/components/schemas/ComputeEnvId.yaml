@@ -3,3 +3,4 @@ properties:
   computeEnvId:
     type: string
     description: workflow run ID
+    readOnly: true

@@ -11,7 +11,7 @@ properties:
   queueId:
     type: string
     description: Queue Id
-    writeOnly: true
+    readOnly: true
   status:
     $ref: ../definitions/SubmissionStatus.yaml
   docker:
