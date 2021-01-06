@@ -45,7 +45,7 @@
     }
   ],
   "paths": {
-    "/queue": {
+    "/queues": {
       "post": {
         "tags": [
           "Queue"
@@ -136,7 +136,7 @@
         }
       }
     },
-    "/queue/{queueId}": {
+    "/queues/{queueId}": {
       "parameters": [
         {
           "in": "path",
@@ -229,7 +229,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission": {
+    "/queues/{queueId}/submissions": {
       "parameters": [
         {
           "in": "path",
@@ -351,7 +351,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}": {
+    "/queues/{queueId}/submissions/{submissionId}": {
       "parameters": [
         {
           "in": "path",
@@ -483,7 +483,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/status": {
+    "/queues/{queueId}/submissions/{submissionId}/status": {
       "parameters": [
         {
           "in": "path",
@@ -531,7 +531,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run": {
+    "/queues/{queueId}/submissions/{submissionId}/runs": {
       "parameters": [
         {
           "in": "path",
@@ -587,7 +587,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run/{runId}": {
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}": {
       "parameters": [
         {
           "in": "path",
@@ -663,7 +663,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run/{runId}/log": {
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}/log": {
       "parameters": [
         {
           "in": "path",
@@ -720,7 +720,7 @@
         }
       }
     },
-    "/computeEnv": {
+    "/computeEnvs": {
       "post": {
         "tags": [
           "Compute"
@@ -815,7 +815,7 @@
         }
       }
     },
-    "/computeEnv/{computeEnvId}": {
+    "/computeEnvs/{computeEnvId}": {
       "parameters": [
         {
           "in": "path",

@@ -30,7 +30,7 @@ tags:
         https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
     name: Submission
 paths:
-  /queue:
+  /queues:
     post:
       tags:
         - Queue
@@ -90,7 +90,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}':
+  '/queues/{queueId}':
     parameters:
       - in: path
         name: queueId
@@ -150,7 +150,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}/submission':
+  '/queues/{queueId}/submissions':
     parameters:
       - in: path
         name: queueId
@@ -223,7 +223,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}/submission/{submissionId}':
+  '/queues/{queueId}/submissions/{submissionId}':
     parameters:
       - in: path
         name: queueId
@@ -298,7 +298,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}/submission/{submissionId}/status':
+  '/queues/{queueId}/submissions/{submissionId}/status':
     parameters:
       - in: path
         name: queueId
@@ -329,7 +329,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}/submission/{submissionId}/run':
+  '/queues/{queueId}/submissions/{submissionId}/runs':
     parameters:
       - in: path
         name: queueId
@@ -365,7 +365,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
-  '/queue/{queueId}/submission/{submissionId}/run/{runId}':
+  '/queues/{queueId}/submissions/{submissionId}/runs/{runId}':
     parameters:
       - in: path
         name: queueId
@@ -415,7 +415,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queue/{queueId}/submission/{submissionId}/run/{runId}/log':
+  '/queues/{queueId}/submissions/{submissionId}/runs/{runId}/log':
     parameters:
       - in: path
         name: queueId
@@ -452,7 +452,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /computeEnv:
+  /computeEnvs:
     post:
       tags:
         - Compute
@@ -513,7 +513,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/computeEnv/{computeEnvId}':
+  '/computeEnvs/{computeEnvId}':
     parameters:
       - in: path
         name: computeEnvId
