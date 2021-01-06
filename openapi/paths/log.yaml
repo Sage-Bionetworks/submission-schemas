@@ -21,7 +21,7 @@ get:
   tags:
     - Execution
   summary: Get a submission's run logs
-  description: Returns the submission's logs for a given run ID.
+  description: Returns the submission's logs for a given run ID. This is dependant on how the compute environment returns logs.
   operationId: "getSubmissionLog"
   responses:
     '200':
