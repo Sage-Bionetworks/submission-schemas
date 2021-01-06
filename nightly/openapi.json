@@ -45,7 +45,7 @@
     }
   ],
   "paths": {
-    "/queue": {
+    "/queues": {
       "post": {
         "tags": [
           "Queue"
@@ -136,7 +136,7 @@
         }
       }
     },
-    "/queue/{queueId}": {
+    "/queues/{queueId}": {
       "parameters": [
         {
           "in": "path",
@@ -229,7 +229,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission": {
+    "/queues/{queueId}/submissions": {
       "parameters": [
         {
           "in": "path",
@@ -351,7 +351,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}": {
+    "/queues/{queueId}/submissions/{submissionId}": {
       "parameters": [
         {
           "in": "path",
@@ -483,7 +483,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/status": {
+    "/queues/{queueId}/submissions/{submissionId}/status": {
       "parameters": [
         {
           "in": "path",
@@ -531,7 +531,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run": {
+    "/queues/{queueId}/submissions/{submissionId}/runs": {
       "parameters": [
         {
           "in": "path",
@@ -587,7 +587,7 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run/{runId}": {
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}": {
       "parameters": [
         {
           "in": "path",
@@ -663,7 +663,62 @@
         }
       }
     },
-    "/queue/{queueId}/submission/{submissionId}/run/{runId}/log": {
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "runId",
+          "description": "The ID of the run",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Cancels a submission's run",
+        "description": "Cancels the submission's run for a given run ID. This is dependant on how the compute environment cancels runs.",
+        "operationId": "cancelSubmissionRun",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The run was cancelled."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}/log": {
       "parameters": [
         {
           "in": "path",
@@ -698,8 +753,8 @@
           "Execution"
         ],
         "summary": "Get a submission's run logs",
-        "description": "Returns the submission's logs for a given run ID.",
-        "operationId": "getSubmissionLog",
+        "description": "Returns the submission's logs for a given run ID. This is dependant on how the compute environment returns logs.",
+        "operationId": "getSubmissionRunLog",
         "responses": {
           "200": {
             "description": "Success",
@@ -720,7 +775,7 @@
         }
       }
     },
-    "/computeEnv": {
+    "/computeEnvs": {
       "post": {
         "tags": [
           "Compute"
@@ -815,7 +870,7 @@
         }
       }
     },
-    "/computeEnv/{computeEnvId}": {
+    "/computeEnvs/{computeEnvId}": {
       "parameters": [
         {
           "in": "path",
@@ -918,6 +973,10 @@
             "description": "Queue Id",
             "readOnly": true
           },
+          "name": {
+            "type": "string",
+            "description": "Name of Queue"
+          },
           "computeId": {
             "type": "string",
             "description": "Compute Environment Id"
@@ -1010,6 +1069,10 @@
         "type": "object",
         "description": "A Docker Submission",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
           "submissionId": {
             "type": "integer",
             "description": "Submission Id",
@@ -1022,7 +1085,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1037,15 +1100,32 @@
               "digest": {
                 "type": "string",
                 "description": "Docker digest"
+              },
+              "entrypoint": {
+                "type": "string",
+                "description": "Docker entrypoint.  The default assumes that the docker image is built with a predefined entrypoint."
               }
-            }
+            },
+            "required": [
+              "name",
+              "digest"
+            ]
           }
-        }
+        },
+        "required": [
+          "name",
+          "submitter",
+          "docker"
+        ]
       },
       "WorkflowSubmission": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
           "submissionId": {
             "type": "integer",
             "description": "Submission Id",
@@ -1058,7 +1138,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1071,12 +1151,20 @@
             "type": "string",
             "description": "Worklfow inputs"
           }
-        }
+        },
+        "required": [
+          "name",
+          "submitter"
+        ]
       },
       "FileSubmission": {
         "type": "object",
         "description": "A file Submission",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
           "submissionId": {
             "type": "integer",
             "description": "Submission Id",
@@ -1089,7 +1177,7 @@
           "queueId": {
             "type": "string",
             "description": "Queue Id",
-            "writeOnly": true
+            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1098,7 +1186,12 @@
             "type": "string",
             "description": "File to submit to challenge"
           }
-        }
+        },
+        "required": [
+          "name",
+          "submitter",
+          "file"
+        ]
       },
       "SubmissionListResponse": {
         "type": "object",
@@ -1189,6 +1282,10 @@
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of compute environment"
+          },
           "wesApiHost": {
             "default": "localhost:8080",
             "type": "string",
@@ -1226,7 +1323,8 @@
         "properties": {
           "computeEnvId": {
             "type": "string",
-            "description": "workflow run ID"
+            "description": "workflow run ID",
+            "readOnly": true
           }
         }
       }
