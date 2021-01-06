@@ -30,23 +30,23 @@ tags:
         https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
     name: Submission
 paths:
-  /queue:
-    $ref: paths/queue.yaml
-  /queue/{queueId}:
-    $ref: paths/queue@{queueId}.yaml
-  /queue/{queueId}/submission:
-    $ref: paths/submission.yaml
-  /queue/{queueId}/submission/{submissionId}:
-    $ref: paths/submission@{submissionId}.yaml
-  /queue/{queueId}/submission/{submissionId}/status:
+  /queues:
+    $ref: paths/queues.yaml
+  /queues/{queueId}:
+    $ref: paths/queues@{queueId}.yaml
+  /queues/{queueId}/submissions:
+    $ref: paths/submissions.yaml
+  /queues/{queueId}/submissions/{submissionId}:
+    $ref: paths/submissions@{submissionId}.yaml
+  /queues/{queueId}/submissions/{submissionId}/status:
     $ref: paths/status.yaml
-  /queue/{queueId}/submission/{submissionId}/run:
-    $ref: paths/run.yaml
-  /queue/{queueId}/submission/{submissionId}/run/{runId}:
-    $ref: paths/run@{runId}.yaml
-  /queue/{queueId}/submission/{submissionId}/run/{runId}/log:
+  /queues/{queueId}/submissions/{submissionId}/runs:
+    $ref: paths/runs.yaml
+  /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
+    $ref: paths/runs@{runId}.yaml
+  /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
     $ref: paths/log.yaml
-  /computeEnv:
-    $ref: paths/computeEnv.yaml
-  /computeEnv/{computeEnvId}:
-    $ref: paths/computeEnv@{computeEnvId}.yaml
+  /computeEnvs:
+    $ref: paths/computeEnvs.yaml
+  /computeEnvs/{computeEnvId}:
+    $ref: paths/computeEnvs@{computeEnvId}.yaml
