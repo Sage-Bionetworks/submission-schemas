@@ -915,14 +915,14 @@ components:
       properties:
         teamId:
           type: string
-          description: workflow run ID
+          description: ID of team.
           readOnly: true
         name:
           type: string
-          description: Name of team
+          description: Name of team.
         description:
           type: string
-          description: Description of Team
+          description: Description of Team.
   responses:
     Unauthorized:
       description: Unauthorized
