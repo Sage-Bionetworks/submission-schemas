@@ -47,7 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Queue'
+                $ref: '#/components/schemas/QueueId'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -177,10 +177,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
+                $ref: '#/components/schemas/SubmissionId'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -703,6 +700,12 @@ components:
       required:
         - title
         - status
+    QueueId:
+      type: object
+      properties:
+        queueId:
+          type: string
+          description: Queue ID
     SubmissionStatus:
       type: string
       description: Submission status
@@ -827,6 +830,12 @@ components:
                   - $ref: '#/components/schemas/DockerSubmission'
                   - $ref: '#/components/schemas/WorkflowSubmission'
                   - $ref: '#/components/schemas/FileSubmission'
+    SubmissionId:
+      type: object
+      properties:
+        submissionId:
+          type: string
+          description: Submission ID
     SubmissionStatus-2:
       type: object
       properties:
@@ -911,8 +920,7 @@ components:
       properties:
         computeEnvId:
           type: string
-          description: workflow run ID
-          readOnly: true
+          description: Compute environment ID
     Team:
       type: object
       properties:

@@ -67,7 +67,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueId"
                 }
               }
             },
@@ -272,17 +272,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SubmissionId"
                 }
               }
             },
@@ -1091,6 +1081,15 @@
           "status"
         ]
       },
+      "QueueId": {
+        "type": "object",
+        "properties": {
+          "queueId": {
+            "type": "string",
+            "description": "Queue ID"
+          }
+        }
+      },
       "SubmissionStatus": {
         "type": "string",
         "description": "Submission status",
@@ -1264,6 +1263,15 @@
           }
         ]
       },
+      "SubmissionId": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "description": "Submission ID"
+          }
+        }
+      },
       "SubmissionStatus-2": {
         "type": "object",
         "properties": {
@@ -1367,8 +1375,7 @@
         "properties": {
           "computeEnvId": {
             "type": "string",
-            "description": "workflow run ID",
-            "readOnly": true
+            "description": "Compute environment ID"
           }
         }
       },
