@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Queue'
+                $ref: '#/components/schemas/QueueResponse'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -145,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Queue'
+                $ref: '#/components/schemas/QueueResponse'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -637,14 +637,76 @@ components:
         - offset
         - limit
         - links
+    QueueResponse:
+      type: object
+      description: A Queue to link submissions to runtime
+      properties:
+        id:
+          type: integer
+          description: Queue Id
+        name:
+          type: string
+          description: Name of Queue
+        computeId:
+          type: string
+          description: Compute Environment Id
+        workflowFiles:
+          items:
+            type: string
+          type: array
+          description: Workflow/Tool files and templates
+        workflowInput:
+          description: Path to workflow inputs
+          type: string
+        createdOn:
+          description: Time of creation
+          type: string
+          format: date-time
+        submissionType:
+          description: Path to workflow inputs
+          type: string
+          enum:
+            - docker
+            - file
+            - workflow
+            - workflow_inputs
+    QueueListResponse:
+      type: object
+      description: A page of queues
+      allOf:
+        - $ref: '#/components/schemas/ListResponseMetadata'
+        - type: object
+          properties:
+            queues:
+              description: An array of queues
+              type: array
+              items:
+                $ref: '#/components/schemas/QueueResponse'
+    Error:
+      type: object
+      description: Problem details (tools.ietf.org/html/rfc7807)
+      properties:
+        title:
+          type: string
+          description: A human readable documentation for the problem type
+        status:
+          type: integer
+          description: The HTTP status code
+        detail:
+          type: string
+          description: >-
+            A human readable explanation specific to this occurrence of the
+            problem
+        type:
+          type: string
+          description: An absolute URI that identifies the problem type
+      required:
+        - title
+        - status
     Queue:
       type: object
       description: A Queue to link submissions to runtime
       properties:
-        queueId:
-          type: integer
-          description: Queue Id
-          readOnly: true
         name:
           type: string
           description: Name of Queue
@@ -667,39 +729,6 @@ components:
             - file
             - workflow
             - workflow_inputs
-    QueueListResponse:
-      type: object
-      description: A page of queues
-      allOf:
-        - $ref: '#/components/schemas/ListResponseMetadata'
-        - type: object
-          properties:
-            queues:
-              description: An array of queues
-              type: array
-              items:
-                $ref: '#/components/schemas/Queue'
-    Error:
-      type: object
-      description: Problem details (tools.ietf.org/html/rfc7807)
-      properties:
-        title:
-          type: string
-          description: A human readable documentation for the problem type
-        status:
-          type: integer
-          description: The HTTP status code
-        detail:
-          type: string
-          description: >-
-            A human readable explanation specific to this occurrence of the
-            problem
-        type:
-          type: string
-          description: An absolute URI that identifies the problem type
-      required:
-        - title
-        - status
     QueueId:
       type: object
       properties:

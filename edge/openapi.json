@@ -161,7 +161,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -215,7 +215,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -994,14 +994,13 @@
           "links"
         ]
       },
-      "Queue": {
+      "QueueResponse": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
-          "queueId": {
+          "id": {
             "type": "integer",
-            "description": "Queue Id",
-            "readOnly": true
+            "description": "Queue Id"
           },
           "name": {
             "type": "string",
@@ -1021,6 +1020,11 @@
           "workflowInput": {
             "description": "Path to workflow inputs",
             "type": "string"
+          },
+          "createdOn": {
+            "description": "Time of creation",
+            "type": "string",
+            "format": "date-time"
           },
           "submissionType": {
             "description": "Path to workflow inputs",
@@ -1048,7 +1052,7 @@
                 "description": "An array of queues",
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -1080,6 +1084,41 @@
           "title",
           "status"
         ]
+      },
+      "Queue": {
+        "type": "object",
+        "description": "A Queue to link submissions to runtime",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of Queue"
+          },
+          "computeId": {
+            "type": "string",
+            "description": "Compute Environment Id"
+          },
+          "workflowFiles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Workflow/Tool files and templates"
+          },
+          "workflowInput": {
+            "description": "Path to workflow inputs",
+            "type": "string"
+          },
+          "submissionType": {
+            "description": "Path to workflow inputs",
+            "type": "string",
+            "enum": [
+              "docker",
+              "file",
+              "workflow",
+              "workflow_inputs"
+            ]
+          }
+        }
       },
       "QueueId": {
         "type": "object",
