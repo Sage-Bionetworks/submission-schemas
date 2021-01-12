@@ -14,7 +14,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/Team.yaml
+            $ref: ../components/schemas/TeamId.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
