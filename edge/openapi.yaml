@@ -348,7 +348,9 @@ paths:
       operationId: runSubmission
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Run'
       responses:
         '200':
           content:
@@ -442,7 +444,9 @@ paths:
       operationId: cancelSubmissionRun
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunId'
       responses:
         '204':
           description: The run was cancelled.
@@ -870,6 +874,15 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/SubmissionStatus'
+    Run:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Data location
+        dataVersion:
+          type: string
+          description: Data version
     RunId:
       type: object
       properties:

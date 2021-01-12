@@ -551,7 +551,11 @@
         "operationId": "runSubmission",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Run"
+              }
+            }
           }
         },
         "responses": {
@@ -692,7 +696,11 @@
         "operationId": "cancelSubmissionRun",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunId"
+              }
+            }
           }
         },
         "responses": {
@@ -1316,6 +1324,19 @@
         "properties": {
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
+          }
+        }
+      },
+      "Run": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "Data location"
+          },
+          "dataVersion": {
+            "type": "string",
+            "description": "Data version"
           }
         }
       },
