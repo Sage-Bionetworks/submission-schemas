@@ -944,7 +944,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Team"
+                  "$ref": "#/components/schemas/TeamId"
                 }
               }
             },
@@ -1394,6 +1394,15 @@
           "description": {
             "type": "string",
             "description": "Description of Team."
+          }
+        }
+      },
+      "TeamId": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "description": "Team ID"
           }
         }
       }
