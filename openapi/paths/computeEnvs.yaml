@@ -8,8 +8,8 @@ post:
     content:
       application/json:
         schema:
-            oneOf:
-              - $ref: ../components/schemas/WesComputeEnv.yaml
+          oneOf:
+            - $ref: ../components/schemas/WesComputeEnv.yaml
   responses:
     '200':
       content:

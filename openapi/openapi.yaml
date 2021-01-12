@@ -40,10 +40,10 @@ paths:
     $ref: paths/submissions@{submissionId}.yaml
   # /queues/{queueId}/submissions/{submissionId}/status:
   #   $ref: paths/status.yaml
-  # /queues/{queueId}/submissions/{submissionId}/runs:
-  #   $ref: paths/runs.yaml
-  # /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
-  #   $ref: paths/runs@{runId}.yaml
+  /queues/{queueId}/submissions/{submissionId}/runs:
+    $ref: paths/runs.yaml
+  /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
+    $ref: paths/runs@{runId}.yaml
   # /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
   #   $ref: paths/cancel.yaml
   # /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
