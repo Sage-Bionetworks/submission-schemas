@@ -30,7 +30,7 @@ post:
         the `computeEnvId` parameter in `GET /computeEnvs/{computeEnvId}`.
       operationId: getComputeEnv
       parameters:
-        computeEnvId: $response.body#/computeEnvIds
+        computeEnvId: $response.body#/computeEnvId
 get:
   tags:
     - Compute
