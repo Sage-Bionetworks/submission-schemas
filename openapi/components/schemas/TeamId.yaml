@@ -1,0 +1,5 @@
+type: object
+properties:
+  teamId:
+    type: string
+    description: Team ID
