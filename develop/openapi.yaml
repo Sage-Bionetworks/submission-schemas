@@ -317,7 +317,9 @@ paths:
       operationId: runSubmission
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Run'
       responses:
         '200':
           content:
@@ -632,6 +634,15 @@ components:
         submissionId:
           type: string
           description: Submission ID
+    Run:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Data location
+        dataVersion:
+          type: string
+          description: Data version
     RunId:
       type: object
       properties:
