@@ -11,7 +11,7 @@ post:
           oneOf:
             - $ref: ../components/schemas/WesComputeEnv.yaml
   responses:
-    '200':
+    '201':
       content:
         application/json:
           schema:

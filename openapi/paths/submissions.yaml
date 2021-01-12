@@ -20,7 +20,7 @@ post:
             - $ref: ../components/schemas/FileSubmission.yaml
             - $ref: ../components/schemas/WorkflowSubmission.yaml
   responses:
-    '200':
+    '201':
       content:
         application/json:
           schema:
