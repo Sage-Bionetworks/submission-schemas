@@ -472,6 +472,138 @@
           }
         }
       }
+    },
+    "/queues/{queueId}/submissions/{submissionId}/runs": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Executes a submission",
+        "description": "Executes a submission",
+        "operationId": "runSubmission",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunId"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "runId",
+          "description": "The ID of the run",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Get a submission run",
+        "description": "Returns the run for a submission",
+        "operationId": "getSubmissionRun",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunId"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Delete a submission run",
+        "description": "Deletes the run for a submission",
+        "operationId": "deleteSubmissionRun",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -819,6 +951,15 @@
           "submissionId": {
             "type": "string",
             "description": "Submission ID"
+          }
+        }
+      },
+      "RunId": {
+        "type": "object",
+        "properties": {
+          "runId": {
+            "type": "string",
+            "description": "workflow run ID"
           }
         }
       }
