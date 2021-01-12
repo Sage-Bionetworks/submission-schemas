@@ -820,7 +820,7 @@
             "description": "The `computeEnvId` value returned in the response can be used as the `computeEnvId` parameter in `GET /computeEnvs/{computeEnvId}`.\n",
             "operationId": "getComputeEnv",
             "parameters": {
-              "computeEnvId": "$response.body#/computeEnvIds"
+              "computeEnvId": "$response.body#/computeEnvId"
             }
           }
         }
