@@ -1,0 +1,5 @@
+type: object
+properties:
+  submissionId:
+    type: string
+    description: Submission ID

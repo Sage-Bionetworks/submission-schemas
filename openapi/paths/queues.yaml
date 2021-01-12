@@ -14,7 +14,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/Queue.yaml
+            $ref: ../components/schemas/QueueId.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml

@@ -1,0 +1,5 @@
+type: object
+properties:
+  queueId:
+    type: string
+    description: Queue ID
