@@ -887,7 +887,7 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/WesComputeEnv"
+                      "$ref": "#/components/schemas/WesComputeEnvResponse"
                     }
                   ]
                 }
@@ -1369,10 +1369,14 @@
           }
         }
       },
-      "WesComputeEnv": {
+      "WesComputeEnvResponse": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "Compute environment ID"
+          },
           "name": {
             "type": "string",
             "description": "Name of compute environment"
@@ -1400,7 +1404,7 @@
                 "items": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/WesComputeEnv"
+                      "$ref": "#/components/schemas/WesComputeEnvResponse"
                     }
                   ]
                 }
@@ -1408,6 +1412,21 @@
             }
           }
         ]
+      },
+      "WesComputeEnv": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of compute environment"
+          },
+          "wesApiHost": {
+            "default": "localhost:8080",
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
+          }
+        }
       },
       "ComputeEnvId": {
         "type": "object",
