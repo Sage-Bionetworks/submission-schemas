@@ -657,6 +657,65 @@
         }
       }
     },
+    "/queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "queueId",
+          "description": "The ID of the queue",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "runId",
+          "description": "The ID of the run",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "submissionId",
+          "description": "The ID of the submission",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Execution"
+        ],
+        "summary": "Cancels a submission's run",
+        "description": "Cancels the submission's run for a given run ID. This is dependant on how the compute environment cancels runs.",
+        "operationId": "cancelSubmissionRun",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The run was cancelled."
+          },
+          "403": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/queues/{queueId}/submissions/{submissionId}/runs/{runId}/log": {
       "parameters": [
         {
