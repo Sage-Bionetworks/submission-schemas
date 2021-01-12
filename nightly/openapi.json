@@ -67,7 +67,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueId"
                 }
               }
             },
@@ -161,7 +161,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -215,7 +215,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -272,17 +272,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SubmissionId"
                 }
               }
             },
@@ -897,7 +887,7 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/WesComputeEnv"
+                      "$ref": "#/components/schemas/WesComputeEnvResponse"
                     }
                   ]
                 }
@@ -954,7 +944,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Team"
+                  "$ref": "#/components/schemas/TeamId"
                 }
               }
             },
@@ -1004,14 +994,13 @@
           "links"
         ]
       },
-      "Queue": {
+      "QueueResponse": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
-          "queueId": {
+          "id": {
             "type": "integer",
-            "description": "Queue Id",
-            "readOnly": true
+            "description": "Queue Id"
           },
           "name": {
             "type": "string",
@@ -1031,6 +1020,11 @@
           "workflowInput": {
             "description": "Path to workflow inputs",
             "type": "string"
+          },
+          "createdOn": {
+            "description": "Time of creation",
+            "type": "string",
+            "format": "date-time"
           },
           "submissionType": {
             "description": "Path to workflow inputs",
@@ -1058,7 +1052,7 @@
                 "description": "An array of queues",
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Queue"
+                  "$ref": "#/components/schemas/QueueResponse"
                 }
               }
             }
@@ -1090,6 +1084,50 @@
           "title",
           "status"
         ]
+      },
+      "Queue": {
+        "type": "object",
+        "description": "A Queue to link submissions to runtime",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of Queue"
+          },
+          "computeId": {
+            "type": "string",
+            "description": "Compute Environment Id"
+          },
+          "workflowFiles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Workflow/Tool files and templates"
+          },
+          "workflowInput": {
+            "description": "Path to workflow inputs",
+            "type": "string"
+          },
+          "submissionType": {
+            "description": "Path to workflow inputs",
+            "type": "string",
+            "enum": [
+              "docker",
+              "file",
+              "workflow",
+              "workflow_inputs"
+            ]
+          }
+        }
+      },
+      "QueueId": {
+        "type": "object",
+        "properties": {
+          "queueId": {
+            "type": "string",
+            "description": "Queue ID"
+          }
+        }
       },
       "SubmissionStatus": {
         "type": "string",
@@ -1264,6 +1302,15 @@
           }
         ]
       },
+      "SubmissionId": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "description": "Submission ID"
+          }
+        }
+      },
       "SubmissionStatus-2": {
         "type": "object",
         "properties": {
@@ -1322,10 +1369,14 @@
           }
         }
       },
-      "WesComputeEnv": {
+      "WesComputeEnvResponse": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "Compute environment ID"
+          },
           "name": {
             "type": "string",
             "description": "Name of compute environment"
@@ -1353,7 +1404,7 @@
                 "items": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/WesComputeEnv"
+                      "$ref": "#/components/schemas/WesComputeEnvResponse"
                     }
                   ]
                 }
@@ -1362,13 +1413,27 @@
           }
         ]
       },
+      "WesComputeEnv": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of compute environment"
+          },
+          "wesApiHost": {
+            "default": "localhost:8080",
+            "type": "string",
+            "description": "Workflow Execution Service implementation endpoint"
+          }
+        }
+      },
       "ComputeEnvId": {
         "type": "object",
         "properties": {
           "computeEnvId": {
             "type": "string",
-            "description": "workflow run ID",
-            "readOnly": true
+            "description": "Compute environment ID"
           }
         }
       },
@@ -1387,6 +1452,15 @@
           "description": {
             "type": "string",
             "description": "Description of Team."
+          }
+        }
+      },
+      "TeamId": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "description": "Team ID"
           }
         }
       }
