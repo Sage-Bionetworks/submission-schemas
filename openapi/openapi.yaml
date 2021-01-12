@@ -44,8 +44,8 @@ paths:
     $ref: paths/runs.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
     $ref: paths/runs@{runId}.yaml
-  /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
-    $ref: paths/cancel.yaml
+  # /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
+  #   $ref: paths/cancel.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
     $ref: paths/log.yaml
   /computeEnvs:
