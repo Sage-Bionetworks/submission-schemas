@@ -519,6 +519,14 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
+      links:
+        GetCompute:
+          description: >
+            The `computeEnvId` value returned in the response can be used as the
+            `computeEnvId` parameter in `GET /computeEnvs/{computeEnvId}`.
+          operationId: operationId
+          parameters:
+            computeEnvId: $response.body#/computeEnvId
     get:
       tags:
         - Compute
