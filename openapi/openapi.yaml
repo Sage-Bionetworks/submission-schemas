@@ -39,15 +39,15 @@ paths:
   /queues/{queueId}/submissions/{submissionId}:
     $ref: paths/submissions@{submissionId}.yaml
   /queues/{queueId}/submissions/{submissionId}/status:
-    $ref: paths/status.yaml
+    $ref: paths/submissions@{submissionId}@status.yaml
   /queues/{queueId}/submissions/{submissionId}/runs:
     $ref: paths/runs.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
     $ref: paths/runs@{runId}.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
-    $ref: paths/cancel.yaml
+    $ref: paths/runs@{runId}@cancel.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
-    $ref: paths/log.yaml
+    $ref: paths/runs@{runId}@log.yaml
   /computeEnvs:
     $ref: paths/computeEnvs.yaml
   /computeEnvs/{computeEnvId}:

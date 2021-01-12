@@ -19,7 +19,9 @@ post:
   operationId: "runSubmission"
   requestBody:
     content:
-      application/json: {}
+      application/json:
+        schema:
+          $ref: ../components/schemas/Run.yaml
   responses:
     '200':
       content:
