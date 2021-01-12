@@ -39,7 +39,7 @@ paths:
   /queues/{queueId}/submissions/{submissionId}:
     $ref: paths/submissions@{submissionId}.yaml
   /queues/{queueId}/submissions/{submissionId}/status:
-    $ref: paths/status.yaml
+    $ref: paths/submissions@{submissionId}@status.yaml
   /queues/{queueId}/submissions/{submissionId}/runs:
     $ref: paths/runs.yaml
   /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
