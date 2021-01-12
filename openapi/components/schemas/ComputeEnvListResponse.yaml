@@ -9,4 +9,4 @@ allOf:
         type: array
         items:
           oneOf:
-            - $ref: WesComputeEnv.yaml
+            - $ref: WesComputeEnvResponse.yaml
