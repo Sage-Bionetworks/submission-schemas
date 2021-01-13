@@ -43,7 +43,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Queue'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -173,7 +173,7 @@ paths:
                 - $ref: '#/components/schemas/FileSubmission'
                 - $ref: '#/components/schemas/WorkflowSubmission'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -348,9 +348,11 @@ paths:
       operationId: runSubmission
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Run'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -442,7 +444,9 @@ paths:
       operationId: cancelSubmissionRun
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunId'
       responses:
         '204':
           description: The run was cancelled.
@@ -503,7 +507,7 @@ paths:
               oneOf:
                 - $ref: '#/components/schemas/WesComputeEnv'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -602,7 +606,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Team'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -870,6 +874,15 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/SubmissionStatus'
+    Run:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Data location
+        dataVersion:
+          type: string
+          description: Data version
     RunId:
       type: object
       properties:

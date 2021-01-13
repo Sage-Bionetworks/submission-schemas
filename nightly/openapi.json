@@ -63,7 +63,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -268,7 +268,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -551,11 +551,15 @@
         "operationId": "runSubmission",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Run"
+              }
+            }
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -692,7 +696,11 @@
         "operationId": "cancelSubmissionRun",
         "requestBody": {
           "content": {
-            "application/json": {}
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunId"
+              }
+            }
           }
         },
         "responses": {
@@ -787,7 +795,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -940,7 +948,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -1316,6 +1324,19 @@
         "properties": {
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
+          }
+        }
+      },
+      "Run": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "Data location"
+          },
+          "dataVersion": {
+            "type": "string",
+            "description": "Data version"
           }
         }
       },
