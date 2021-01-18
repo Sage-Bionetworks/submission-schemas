@@ -9,3 +9,12 @@ properties:
   dataVersion:
     type: string
     description: Data version
+  status:
+    type:
+    description: Submission Run status
+    enum:
+      - QUEUED
+      - RUNNING
+      - COMPLETE
+      - ERROR
+      - CANCELLED
