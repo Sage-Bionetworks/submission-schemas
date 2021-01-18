@@ -1,4 +1,4 @@
 oneOf:
-  - $ref: ../components/schemas/CreateDockerSubmissionRequest.yaml
-  - $ref: ../components/schemas/CreateFileSubmissionRequest.yaml
-  - $ref: ../components/schemas/CreateWorkflowSubmissionRequest.yaml
+  - $ref: CreateDockerSubmissionRequest.yaml
+  - $ref: CreateFileSubmissionRequest.yaml
+  - $ref: CreateWorkflowSubmissionRequest.yaml

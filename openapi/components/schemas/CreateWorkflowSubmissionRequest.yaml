@@ -8,13 +8,13 @@ properties:
     type: string
     description: Submitter name
   status:
-    $ref: ../definitions/SubmissionStatus.yaml
+    $ref: SubmissionStatus.yaml
   workflow:
     type: string
     description: Workflow to run
   workflowInputs:
     type: string
-    description: Worklfow inputs
+    description: Workflow inputs
 required:
   - name
   - submitter
