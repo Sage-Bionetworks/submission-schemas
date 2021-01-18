@@ -14,8 +14,6 @@ info:
 servers:
   - url: /
 tags:
-  - description: Ceate and link synapse queues with workflow engines
-    name: Queue
   - description: Compute environment
     name: Compute
   - description: Allow synapse submissions to interact with supported workflow engines
@@ -23,6 +21,14 @@ tags:
       description: Mimics GA4GH
       url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
     name: Execution
+  - description: Ceate and link synapse queues with workflow engines
+    name: Queue
+  - description: Submission and its metadata
+    externalDocs:
+      description: More about submission references
+      url: >-
+        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
+    name: Submission
   - description: Submission and its metadata
     externalDocs:
       description: More about submission references
@@ -177,7 +183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionId'
+                $ref: '#/components/schemas/CreateSubmissionResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -214,7 +220,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionListResponse'
+                $ref: '#/components/schemas/ListSubmissionResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -846,7 +852,7 @@ components:
         - name
         - submitter
         - file
-    SubmissionListResponse:
+    ListSubmissionResponse:
       type: object
       description: A page of queues
       allOf:
@@ -861,7 +867,7 @@ components:
                   - $ref: '#/components/schemas/DockerSubmission'
                   - $ref: '#/components/schemas/WorkflowSubmission'
                   - $ref: '#/components/schemas/FileSubmission'
-    SubmissionId:
+    CreateSubmissionResponse:
       type: object
       properties:
         submissionId:
