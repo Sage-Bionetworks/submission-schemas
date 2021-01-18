@@ -8,5 +8,4 @@ allOf:
         description: An array of queues
         type: array
         items:
-          oneOf:
-            - $ref: WesComputeEnvResponse.yaml
+          $ref: ComputeEnv.yaml
