@@ -1,23 +1,26 @@
 type: object
-description: A workflow Submission
+description: A file Submission
 properties:
   name:
     type: string
     description: Name of submission
-  id:
+  submissionId:
     type: integer
     description: Submission Id
+    readOnly: true
   submitter:
     type: string
     description: Submitter name
   queueId:
     type: string
     description: Queue Id
+    readOnly: true
   status:
     $ref: ../definitions/SubmissionStatus.yaml
-  workflow:
+  file:
     type: string
-    description: Workflow to run
-  workflowInputs:
-    type: string
-    description: Worklfow inputs
+    description: File to submit to challenge
+required:
+  - name
+  - submitter
+  - file

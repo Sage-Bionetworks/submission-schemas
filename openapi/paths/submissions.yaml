@@ -16,9 +16,9 @@ post:
       application/json:
         schema:
           oneOf:
-            - $ref: ../components/schemas/DockerSubmission.yaml
-            - $ref: ../components/schemas/FileSubmission.yaml
-            - $ref: ../components/schemas/WorkflowSubmission.yaml
+            - $ref: ../components/schemas/CreateDockerSubmissionRequest.yaml
+            - $ref: ../components/schemas/CreateFileSubmissionRequest.yaml
+            - $ref: ../components/schemas/CreateWorkflowSubmissionRequest.yaml
   responses:
     '201':
       content:
