@@ -29,12 +29,8 @@ tags:
       url: >-
         https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
     name: Submission
-  - description: Submission and its metadata
-    externalDocs:
-      description: More about submission references
-      url: >-
-        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
-    name: Submission
+  - description: Teams
+    name: Team
 paths:
   /queues:
     post:
