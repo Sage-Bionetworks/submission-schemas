@@ -1,6 +1,9 @@
 type: object
 description: A Queue to link submissions to runtime
 properties:
+  id:
+    type: integer
+    description: Queue Id
   name:
     type: string
     description: Name of Queue
@@ -15,6 +18,10 @@ properties:
   workflowInput:
     description: Path to workflow inputs
     type: string
+  createdOn:
+    description: Time of creation
+    type: string
+    format: date-time
   submissionType:
     description: Path to workflow inputs
     type: string

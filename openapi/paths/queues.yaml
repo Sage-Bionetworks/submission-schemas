@@ -8,13 +8,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/Queue.yaml
+          $ref: ../components/schemas/CreateQueueRequest.yaml
   responses:
     '201':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/QueueId.yaml
+            $ref: ../components/schemas/CreateQueueResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
@@ -51,7 +51,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/QueueListResponse.yaml
+            $ref: ../components/schemas/ListQueueResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
