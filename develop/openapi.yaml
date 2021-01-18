@@ -41,13 +41,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Queue'
+              $ref: '#/components/schemas/CreateQueueRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueId'
+                $ref: '#/components/schemas/CreateQueueResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueListResponse'
+                $ref: '#/components/schemas/ListQueueResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -145,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -639,7 +639,7 @@ components:
         - offset
         - limit
         - links
-    QueueResponse:
+    Queue:
       type: object
       description: A Queue to link submissions to runtime
       properties:
@@ -672,7 +672,7 @@ components:
             - file
             - workflow
             - workflow_inputs
-    QueueListResponse:
+    ListQueueResponse:
       type: object
       description: A page of queues
       allOf:
@@ -683,7 +683,7 @@ components:
               description: An array of queues
               type: array
               items:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
     Error:
       type: object
       description: Problem details (tools.ietf.org/html/rfc7807)
@@ -705,7 +705,7 @@ components:
       required:
         - title
         - status
-    Queue:
+    CreateQueueRequest:
       type: object
       description: A Queue to link submissions to runtime
       properties:
@@ -731,7 +731,7 @@ components:
             - file
             - workflow
             - workflow_inputs
-    QueueId:
+    CreateQueueResponse:
       type: object
       properties:
         queueId:

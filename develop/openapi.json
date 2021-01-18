@@ -57,7 +57,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Queue"
+                "$ref": "#/components/schemas/CreateQueueRequest"
               }
             }
           }
@@ -67,7 +67,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueId"
+                  "$ref": "#/components/schemas/CreateQueueResponse"
                 }
               }
             },
@@ -121,7 +121,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueListResponse"
+                  "$ref": "#/components/schemas/ListQueueResponse"
                 }
               }
             },
@@ -161,7 +161,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -215,7 +215,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -994,7 +994,7 @@
           "links"
         ]
       },
-      "QueueResponse": {
+      "Queue": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
@@ -1038,7 +1038,7 @@
           }
         }
       },
-      "QueueListResponse": {
+      "ListQueueResponse": {
         "type": "object",
         "description": "A page of queues",
         "allOf": [
@@ -1052,7 +1052,7 @@
                 "description": "An array of queues",
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -1085,7 +1085,7 @@
           "status"
         ]
       },
-      "Queue": {
+      "CreateQueueRequest": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
@@ -1120,7 +1120,7 @@
           }
         }
       },
-      "QueueId": {
+      "CreateQueueResponse": {
         "type": "object",
         "properties": {
           "queueId": {
