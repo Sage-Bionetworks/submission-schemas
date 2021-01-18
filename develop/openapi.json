@@ -1249,11 +1249,9 @@
               "submissions": {
                 "description": "An array of queues",
                 "type": "array",
-                "items": [
-                  {
-                    "$ref": "#/components/schemas/Submission"
-                  }
-                ]
+                "items": {
+                  "$ref": "#/components/schemas/Submission"
+                }
               }
             }
           }

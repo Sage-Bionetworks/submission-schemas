@@ -840,7 +840,7 @@ components:
               description: An array of queues
               type: array
               items:
-                - $ref: '#/components/schemas/Submission'
+                $ref: '#/components/schemas/Submission'
     CreateDockerSubmissionRequest:
       type: object
       description: A Docker Submission
