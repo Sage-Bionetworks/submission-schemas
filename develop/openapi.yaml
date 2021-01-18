@@ -350,13 +350,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Run'
+              $ref: '#/components/schemas/CreateRunRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunId'
+                $ref: '#/components/schemas/CreateRunResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -396,7 +396,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunId'
+                $ref: '#/components/schemas/Run'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -446,7 +446,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RunId'
+              $ref: '#/components/schemas/Empty'
       responses:
         '204':
           description: The run was cancelled.
@@ -872,7 +872,7 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/SubmissionStatus'
-    Run:
+    CreateRunRequest:
       type: object
       properties:
         data:
@@ -881,12 +881,26 @@ components:
         dataVersion:
           type: string
           description: Data version
-    RunId:
+    CreateRunResponse:
       type: object
       properties:
         runId:
           type: string
           description: workflow run ID
+    Run:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Run Id
+        data:
+          type: string
+          description: Data location
+        dataVersion:
+          type: string
+          description: Data version
+    Empty:
+      type: object
     Log:
       type: object
       description: Log and other info

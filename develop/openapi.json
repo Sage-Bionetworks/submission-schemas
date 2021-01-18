@@ -553,7 +553,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Run"
+                "$ref": "#/components/schemas/CreateRunRequest"
               }
             }
           }
@@ -563,7 +563,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunId"
+                  "$ref": "#/components/schemas/CreateRunResponse"
                 }
               }
             },
@@ -624,7 +624,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunId"
+                  "$ref": "#/components/schemas/Run"
                 }
               }
             }
@@ -698,7 +698,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RunId"
+                "$ref": "#/components/schemas/Empty"
               }
             }
           }
@@ -1319,7 +1319,7 @@
           }
         }
       },
-      "Run": {
+      "CreateRunRequest": {
         "type": "object",
         "properties": {
           "data": {
@@ -1332,7 +1332,7 @@
           }
         }
       },
-      "RunId": {
+      "CreateRunResponse": {
         "type": "object",
         "properties": {
           "runId": {
@@ -1340,6 +1340,26 @@
             "description": "workflow run ID"
           }
         }
+      },
+      "Run": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Run Id"
+          },
+          "data": {
+            "type": "string",
+            "description": "Data location"
+          },
+          "dataVersion": {
+            "type": "string",
+            "description": "Data version"
+          }
+        }
+      },
+      "Empty": {
+        "type": "object"
       },
       "Log": {
         "type": "object",
