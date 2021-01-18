@@ -1,8 +1,20 @@
 type: object
 properties:
+  id:
+    type: string
+    description: Run Id
   data:
     type: string
     description: Data location
   dataVersion:
     type: string
     description: Data version
+  status:
+    type: string
+    description: Submission Run status
+    enum:
+      - QUEUED
+      - RUNNING
+      - COMPLETE
+      - ERROR
+      - CANCELLED

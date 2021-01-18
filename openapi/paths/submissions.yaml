@@ -16,15 +16,15 @@ post:
       application/json:
         schema:
           oneOf:
-            - $ref: ../components/schemas/DockerSubmission.yaml
-            - $ref: ../components/schemas/FileSubmission.yaml
-            - $ref: ../components/schemas/WorkflowSubmission.yaml
+            - $ref: ../components/schemas/CreateDockerSubmissionRequest.yaml
+            - $ref: ../components/schemas/CreateFileSubmissionRequest.yaml
+            - $ref: ../components/schemas/CreateWorkflowSubmissionRequest.yaml
   responses:
     '201':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/SubmissionId.yaml
+            $ref: ../components/schemas/CreateSubmissionResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
@@ -61,7 +61,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/SubmissionListResponse.yaml
+            $ref: ../components/schemas/ListSubmissionResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml

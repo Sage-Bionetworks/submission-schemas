@@ -21,13 +21,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/Run.yaml
+          $ref: ../components/schemas/CreateRunRequest.yaml
   responses:
     '201':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/RunId.yaml
+            $ref: ../components/schemas/CreateRunResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml

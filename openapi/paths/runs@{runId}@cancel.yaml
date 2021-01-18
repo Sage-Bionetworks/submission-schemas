@@ -27,7 +27,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/RunId.yaml
+          $ref: ../components/schemas/Empty.yaml
   responses:
     '204':
       description: The run was cancelled.

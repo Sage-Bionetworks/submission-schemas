@@ -4,15 +4,9 @@ properties:
   name:
     type: string
     description: Name of submission
-  id:
-    type: integer
-    description: Submission Id
   submitter:
     type: string
     description: Submitter name
-  queueId:
-    type: string
-    description: Queue Id
   status:
     $ref: ../definitions/SubmissionStatus.yaml
   docker:
@@ -30,3 +24,7 @@ properties:
     required:
       - name
       - digest
+required:
+  - name
+  - submitter
+  - docker

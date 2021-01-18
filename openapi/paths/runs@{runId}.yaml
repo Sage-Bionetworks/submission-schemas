@@ -29,7 +29,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/RunId.yaml
+            $ref: ../components/schemas/Run.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':

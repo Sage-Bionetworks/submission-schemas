@@ -1,0 +1,8 @@
+type: object
+properties:
+  data:
+    type: string
+    description: Data location
+  dataVersion:
+    type: string
+    description: Data version

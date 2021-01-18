@@ -8,4 +8,4 @@ allOf:
         description: An array of queues
         type: array
         items:
-          $ref: QueueResponse.yaml
+          $ref: Queue.yaml

@@ -4,17 +4,15 @@ properties:
   name:
     type: string
     description: Name of submission
-  id:
-    type: integer
-    description: Submission Id
   submitter:
     type: string
     description: Submitter name
-  queueId:
-    type: string
-    description: Queue Id
   status:
     $ref: ../definitions/SubmissionStatus.yaml
   file:
     type: string
     description: File to submit to challenge
+required:
+  - name
+  - submitter
+  - file

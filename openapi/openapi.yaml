@@ -14,8 +14,6 @@ info:
 servers:
   - url: /
 tags:
-  - description: Ceate and link synapse queues with workflow engines
-    name: Queue
   - description: Compute environment
     name: Compute
   - description: Allow synapse submissions to interact with supported workflow engines
@@ -23,6 +21,14 @@ tags:
       description: Mimics GA4GH
       url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
     name: Execution
+  - description: Ceate and link synapse queues with workflow engines
+    name: Queue
+  - description: Submission and its metadata
+    externalDocs:
+      description: More about submission references
+      url: >-
+        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
+    name: Submission
   - description: Submission and its metadata
     externalDocs:
       description: More about submission references
