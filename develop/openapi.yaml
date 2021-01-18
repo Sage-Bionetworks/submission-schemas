@@ -608,13 +608,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              $ref: '#/components/schemas/CreateTeamRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamId'
+                $ref: '#/components/schemas/CreateTeamResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -1005,7 +1005,7 @@ components:
         computeEnvId:
           type: string
           description: Compute environment ID
-    Team:
+    CreateTeamRequest:
       type: object
       properties:
         teamId:
@@ -1018,7 +1018,7 @@ components:
         description:
           type: string
           description: Description of Team.
-    TeamId:
+    CreateTeamResponse:
       type: object
       properties:
         teamId:

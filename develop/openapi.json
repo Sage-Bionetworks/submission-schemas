@@ -942,7 +942,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Team"
+                "$ref": "#/components/schemas/CreateTeamRequest"
               }
             }
           }
@@ -952,7 +952,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TeamId"
+                  "$ref": "#/components/schemas/CreateTeamResponse"
                 }
               }
             },
@@ -1489,7 +1489,7 @@
           }
         }
       },
-      "Team": {
+      "CreateTeamRequest": {
         "type": "object",
         "properties": {
           "teamId": {
@@ -1507,7 +1507,7 @@
           }
         }
       },
-      "TeamId": {
+      "CreateTeamResponse": {
         "type": "object",
         "properties": {
           "teamId": {
