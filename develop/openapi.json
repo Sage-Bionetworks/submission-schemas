@@ -1138,18 +1138,26 @@
         }
       },
       "SubmissionStatus": {
-        "type": "string",
+        "type": "object",
         "description": "Submission status",
-        "enum": [
-          "RECEIVED",
-          "EVALUATION_IN_PROGRESS",
-          "INVALID",
-          "ACCEPTED",
-          "REJECTED",
-          "VALIDATED",
-          "SCORED",
-          "CANCELLED"
-        ]
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Submission status",
+            "enum": [
+              "RECEIVED",
+              "SUBMITTED",
+              "EVALUATION_IN_PROGRESS",
+              "INVALID",
+              "ACCEPTED",
+              "REJECTED"
+            ]
+          },
+          "numberOfRuns": {
+            "type": "integer",
+            "description": "Number of times submission has been executed"
+          }
+        }
       },
       "DockerSubmission": {
         "type": "object",
@@ -1441,6 +1449,17 @@
           "dataVersion": {
             "type": "string",
             "description": "Data version"
+          },
+          "status": {
+            "type": "string",
+            "description": "Submission Run status",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "COMPLETE",
+              "ERROR",
+              "CANCELLED"
+            ]
           }
         }
       },
