@@ -8,7 +8,4 @@ allOf:
         description: An array of queues
         type: array
         items:
-          oneOf:
-            - $ref: DockerSubmission.yaml
-            - $ref: WorkflowSubmission.yaml
-            - $ref: FileSubmission.yaml
+          - $ref: Submission.yaml

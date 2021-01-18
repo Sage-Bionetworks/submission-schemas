@@ -23,10 +23,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/DockerSubmission.yaml
-              - $ref: ../components/schemas/FileSubmission.yaml
-              - $ref: ../components/schemas/WorkflowSubmission.yaml
+            $ref: ../components/schemas/Submission.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
@@ -54,20 +51,14 @@ put:
     content:
       application/json:
         schema:
-            oneOf:
-              - $ref: ../components/schemas/DockerSubmission.yaml
-              - $ref: ../components/schemas/FileSubmission.yaml
-              - $ref: ../components/schemas/WorkflowSubmission.yaml
+          $ref: ../components/schemas/Submission.yaml
   responses:
     '200':
       description: Success
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/DockerSubmission.yaml
-              - $ref: ../components/schemas/FileSubmission.yaml
-              - $ref: ../components/schemas/WorkflowSubmission.yaml
+            $ref: ../components/schemas/Submission.yaml
     '403':
       $ref: ../components/responses/Unauthorized.yaml
     '404':
