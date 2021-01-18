@@ -1,0 +1,4 @@
+oneOf:
+  - $ref: DockerSubmission.yaml
+  - $ref: FileSubmission.yaml
+  - $ref: WorkflowSubmission.yaml
