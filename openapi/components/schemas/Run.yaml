@@ -10,7 +10,7 @@ properties:
     type: string
     description: Data version
   status:
-    type:
+    type: string
     description: Submission Run status
     enum:
       - QUEUED
