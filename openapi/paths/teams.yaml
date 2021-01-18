@@ -8,13 +8,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/Team.yaml
+          $ref: ../components/schemas/CreateTeamRequest.yaml
   responses:
     '201':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/TeamId.yaml
+            $ref: ../components/schemas/CreateTeamResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
