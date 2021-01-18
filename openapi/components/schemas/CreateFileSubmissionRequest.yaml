@@ -4,17 +4,9 @@ properties:
   name:
     type: string
     description: Name of submission
-  submissionId:
-    type: integer
-    description: Submission Id
-    readOnly: true
   submitter:
     type: string
     description: Submitter name
-  queueId:
-    type: string
-    description: Queue Id
-    readOnly: true
   status:
     $ref: ../definitions/SubmissionStatus.yaml
   file:
