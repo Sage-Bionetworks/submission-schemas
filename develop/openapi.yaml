@@ -245,10 +245,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
+                $ref: '#/components/schemas/Submission'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -276,20 +273,14 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/DockerSubmission'
-                - $ref: '#/components/schemas/FileSubmission'
-                - $ref: '#/components/schemas/WorkflowSubmission'
+              $ref: '#/components/schemas/Submission'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
+                $ref: '#/components/schemas/Submission'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -788,6 +779,27 @@ components:
           required:
             - name
             - digest
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
     WorkflowSubmission:
       type: object
       description: A workflow Submission
@@ -812,27 +824,11 @@ components:
         workflowInputs:
           type: string
           description: Worklfow inputs
-    FileSubmission:
-      type: object
-      description: A file Submission
-      properties:
-        name:
-          type: string
-          description: Name of submission
-        id:
-          type: integer
-          description: Submission Id
-        submitter:
-          type: string
-          description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
-        file:
-          type: string
-          description: File to submit to challenge
+    Submission:
+      oneOf:
+        - $ref: '#/components/schemas/DockerSubmission'
+        - $ref: '#/components/schemas/FileSubmission'
+        - $ref: '#/components/schemas/WorkflowSubmission'
     ListSubmissionResponse:
       type: object
       description: A page of queues
@@ -844,10 +840,7 @@ components:
               description: An array of queues
               type: array
               items:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
+                - $ref: '#/components/schemas/Submission'
     CreateDockerSubmissionRequest:
       type: object
       description: A Docker Submission

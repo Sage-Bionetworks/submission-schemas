@@ -369,17 +369,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Submission"
                 }
               }
             }
@@ -422,17 +412,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/DockerSubmission"
-                  },
-                  {
-                    "$ref": "#/components/schemas/FileSubmission"
-                  },
-                  {
-                    "$ref": "#/components/schemas/WorkflowSubmission"
-                  }
-                ]
+                "$ref": "#/components/schemas/Submission"
               }
             }
           }
@@ -443,17 +423,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Submission"
                 }
               }
             }
@@ -1191,6 +1161,35 @@
           }
         }
       },
+      "FileSubmission": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Submission Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        }
+      },
       "WorkflowSubmission": {
         "type": "object",
         "description": "A workflow Submission",
@@ -1224,34 +1223,18 @@
           }
         }
       },
-      "FileSubmission": {
-        "type": "object",
-        "description": "A file Submission",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of submission"
+      "Submission": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/DockerSubmission"
           },
-          "id": {
-            "type": "integer",
-            "description": "Submission Id"
+          {
+            "$ref": "#/components/schemas/FileSubmission"
           },
-          "submitter": {
-            "type": "string",
-            "description": "Submitter name"
-          },
-          "queueId": {
-            "type": "string",
-            "description": "Queue Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
-          "file": {
-            "type": "string",
-            "description": "File to submit to challenge"
+          {
+            "$ref": "#/components/schemas/WorkflowSubmission"
           }
-        }
+        ]
       },
       "ListSubmissionResponse": {
         "type": "object",
@@ -1266,19 +1249,11 @@
               "submissions": {
                 "description": "An array of queues",
                 "type": "array",
-                "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    }
-                  ]
-                }
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/Submission"
+                  }
+                ]
               }
             }
           }
