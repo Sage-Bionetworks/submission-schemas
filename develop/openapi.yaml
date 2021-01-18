@@ -504,14 +504,13 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/WesComputeEnv'
+              $ref: '#/components/schemas/CreateComputeEnvRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComputeEnvId'
+                $ref: '#/components/schemas/CreateComputeEnvResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -519,14 +518,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/Conflict'
-      links:
-        GetCompute:
-          description: >
-            The `computeEnvId` value returned in the response can be used as the
-            `computeEnvId` parameter in `GET /computeEnvs/{computeEnvId}`.
-          operationId: getComputeEnv
-          parameters:
-            computeEnvId: $response.body#/computeEnvId
     get:
       tags:
         - Compute
@@ -556,7 +547,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComputeEnvListResponse'
+                $ref: '#/components/schemas/ListComputeEnvResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -582,8 +573,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/WesComputeEnvResponse'
+                $ref: '#/components/schemas/ComputeEnv'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -955,7 +945,7 @@ components:
           default: 'localhost:8080'
           type: string
           description: Workflow Execution Service implementation endpoint
-    ComputeEnvListResponse:
+    ListComputeEnvResponse:
       type: object
       description: A page of queues
       allOf:
@@ -968,23 +958,48 @@ components:
               items:
                 oneOf:
                   - $ref: '#/components/schemas/WesComputeEnvResponse'
-    WesComputeEnv:
+    CreateComputeEnvRequest:
       type: object
       description: A workflow Submission
       properties:
         name:
           type: string
           description: Name of compute environment
-        wesApiHost:
+        apiHost:
           default: 'localhost:8080'
           type: string
           description: Workflow Execution Service implementation endpoint
-    ComputeEnvId:
+        type:
+          description: Type of Compute Environment
+          type: string
+          enum:
+            - WES
+            - TES
+    CreateComputeEnvResponse:
       type: object
       properties:
         computeEnvId:
           type: string
           description: Compute environment ID
+    ComputeEnv:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Compute environment ID
+        name:
+          type: string
+          description: Name of compute environment
+        apiHost:
+          default: 'localhost:8080'
+          type: string
+          description: Workflow Execution Service implementation endpoint
+        type:
+          description: Type of Compute Environment
+          type: string
+          enum:
+            - WES
+            - TES
     Team:
       type: object
       properties:
