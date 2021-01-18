@@ -170,10 +170,7 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
-                - $ref: '#/components/schemas/CreateFileSubmissionRequest'
-                - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
+              $ref: '#/components/schemas/CreateSubmissionRequest'
       responses:
         '201':
           content:
@@ -323,7 +320,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionStatus-2'
+                $ref: '#/components/schemas/SubmissionStatus'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -920,21 +917,21 @@ components:
           description: Workflow to run
         workflowInputs:
           type: string
-          description: Worklfow inputs
+          description: Workflow inputs
       required:
         - name
         - submitter
+    CreateSubmissionRequest:
+      oneOf:
+        - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
+        - $ref: '#/components/schemas/CreateFileSubmissionRequest'
+        - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
     CreateSubmissionResponse:
       type: object
       properties:
         submissionId:
           type: string
           description: Submission ID
-    SubmissionStatus-2:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
     CreateRunRequest:
       type: object
       properties:

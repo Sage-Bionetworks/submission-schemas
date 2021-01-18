@@ -256,17 +256,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CreateDockerSubmissionRequest"
-                  },
-                  {
-                    "$ref": "#/components/schemas/CreateFileSubmissionRequest"
-                  },
-                  {
-                    "$ref": "#/components/schemas/CreateWorkflowSubmissionRequest"
-                  }
-                ]
+                "$ref": "#/components/schemas/CreateSubmissionRequest"
               }
             }
           }
@@ -511,7 +501,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubmissionStatus-2"
+                  "$ref": "#/components/schemas/SubmissionStatus"
                 }
               }
             }
@@ -1384,12 +1374,25 @@
           },
           "workflowInputs": {
             "type": "string",
-            "description": "Worklfow inputs"
+            "description": "Workflow inputs"
           }
         },
         "required": [
           "name",
           "submitter"
+        ]
+      },
+      "CreateSubmissionRequest": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CreateDockerSubmissionRequest"
+          },
+          {
+            "$ref": "#/components/schemas/CreateFileSubmissionRequest"
+          },
+          {
+            "$ref": "#/components/schemas/CreateWorkflowSubmissionRequest"
+          }
         ]
       },
       "CreateSubmissionResponse": {
@@ -1398,14 +1401,6 @@
           "submissionId": {
             "type": "string",
             "description": "Submission ID"
-          }
-        }
-      },
-      "SubmissionStatus-2": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
           }
         }
       },
