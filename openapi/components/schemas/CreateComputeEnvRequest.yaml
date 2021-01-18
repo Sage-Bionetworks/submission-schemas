@@ -4,7 +4,13 @@ properties:
   name:
     type: string
     description: Name of compute environment
-  wesApiHost:
+  apiHost:
     default: localhost:8080
     type: string
     description: Workflow Execution Service implementation endpoint
+  type:
+    description: Type of Compute Environment
+    type: string
+    enum:
+      - WES
+      - TES

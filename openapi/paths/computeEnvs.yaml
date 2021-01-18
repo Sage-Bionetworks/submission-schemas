@@ -8,14 +8,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: ../components/schemas/WesComputeEnv.yaml
+          $ref: ../components/schemas/CreateComputeEnvRequest.yaml
   responses:
     '201':
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ComputeEnvId.yaml
+            $ref: ../components/schemas/CreateComputeEnvResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
@@ -23,14 +22,6 @@ post:
       $ref: ../components/responses/NotFound.yaml
     '409':
       $ref: ../components/responses/Conflict.yaml
-  links:
-    GetCompute:
-      description: >
-        The `computeEnvId` value returned in the response can be used as
-        the `computeEnvId` parameter in `GET /computeEnvs/{computeEnvId}`.
-      operationId: getComputeEnv
-      parameters:
-        computeEnvId: $response.body#/computeEnvId
 get:
   tags:
     - Compute
@@ -60,7 +51,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ComputeEnvListResponse.yaml
+            $ref: ../components/schemas/ListComputeEnvResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
