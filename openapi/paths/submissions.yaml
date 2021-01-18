@@ -24,7 +24,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/SubmissionId.yaml
+            $ref: ../components/schemas/CreateSubmissionResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
@@ -61,7 +61,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/SubmissionListResponse.yaml
+            $ref: ../components/schemas/ListSubmissionResponse.yaml
       description: Success
     '403':
       $ref: ../components/responses/Unauthorized.yaml
