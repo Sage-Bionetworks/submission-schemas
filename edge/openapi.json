@@ -20,10 +20,6 @@
   ],
   "tags": [
     {
-      "description": "Ceate and link synapse queues with workflow engines",
-      "name": "Queue"
-    },
-    {
       "description": "Compute environment",
       "name": "Compute"
     },
@@ -34,6 +30,18 @@
         "url": "https://github.com/ga4gh/workflow-execution-service-schemas"
       },
       "name": "Execution"
+    },
+    {
+      "description": "Ceate and link synapse queues with workflow engines",
+      "name": "Queue"
+    },
+    {
+      "description": "Submission and its metadata",
+      "externalDocs": {
+        "description": "More about submission references",
+        "url": "https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController"
+      },
+      "name": "Submission"
     },
     {
       "description": "Submission and its metadata",
@@ -57,7 +65,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Queue"
+                "$ref": "#/components/schemas/CreateQueueRequest"
               }
             }
           }
@@ -67,7 +75,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueId"
+                  "$ref": "#/components/schemas/CreateQueueResponse"
                 }
               }
             },
@@ -121,7 +129,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueListResponse"
+                  "$ref": "#/components/schemas/ListQueueResponse"
                 }
               }
             },
@@ -161,7 +169,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -215,7 +223,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -254,13 +262,13 @@
               "schema": {
                 "oneOf": [
                   {
-                    "$ref": "#/components/schemas/DockerSubmission"
+                    "$ref": "#/components/schemas/CreateDockerSubmissionRequest"
                   },
                   {
-                    "$ref": "#/components/schemas/FileSubmission"
+                    "$ref": "#/components/schemas/CreateFileSubmissionRequest"
                   },
                   {
-                    "$ref": "#/components/schemas/WorkflowSubmission"
+                    "$ref": "#/components/schemas/CreateWorkflowSubmissionRequest"
                   }
                 ]
               }
@@ -272,7 +280,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubmissionId"
+                  "$ref": "#/components/schemas/CreateSubmissionResponse"
                 }
               }
             },
@@ -326,7 +334,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubmissionListResponse"
+                  "$ref": "#/components/schemas/ListSubmissionResponse"
                 }
               }
             },
@@ -553,7 +561,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Run"
+                "$ref": "#/components/schemas/CreateRunRequest"
               }
             }
           }
@@ -563,7 +571,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunId"
+                  "$ref": "#/components/schemas/CreateRunResponse"
                 }
               }
             },
@@ -624,7 +632,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunId"
+                  "$ref": "#/components/schemas/Run"
                 }
               }
             }
@@ -698,7 +706,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RunId"
+                "$ref": "#/components/schemas/Empty"
               }
             }
           }
@@ -785,11 +793,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/WesComputeEnv"
-                  }
-                ]
+                "$ref": "#/components/schemas/CreateComputeEnvRequest"
               }
             }
           }
@@ -799,7 +803,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ComputeEnvId"
+                  "$ref": "#/components/schemas/CreateComputeEnvResponse"
                 }
               }
             },
@@ -853,7 +857,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ComputeEnvListResponse"
+                  "$ref": "#/components/schemas/ListComputeEnvResponse"
                 }
               }
             },
@@ -893,11 +897,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/WesComputeEnvResponse"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ComputeEnv"
                 }
               }
             }
@@ -942,7 +942,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Team"
+                "$ref": "#/components/schemas/CreateTeamRequest"
               }
             }
           }
@@ -952,7 +952,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TeamId"
+                  "$ref": "#/components/schemas/CreateTeamResponse"
                 }
               }
             },
@@ -1002,7 +1002,7 @@
           "links"
         ]
       },
-      "QueueResponse": {
+      "Queue": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
@@ -1046,7 +1046,7 @@
           }
         }
       },
-      "QueueListResponse": {
+      "ListQueueResponse": {
         "type": "object",
         "description": "A page of queues",
         "allOf": [
@@ -1060,7 +1060,7 @@
                 "description": "An array of queues",
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/QueueResponse"
+                  "$ref": "#/components/schemas/Queue"
                 }
               }
             }
@@ -1093,7 +1093,7 @@
           "status"
         ]
       },
-      "Queue": {
+      "CreateQueueRequest": {
         "type": "object",
         "description": "A Queue to link submissions to runtime",
         "properties": {
@@ -1128,7 +1128,7 @@
           }
         }
       },
-      "QueueId": {
+      "CreateQueueResponse": {
         "type": "object",
         "properties": {
           "queueId": {
@@ -1138,18 +1138,26 @@
         }
       },
       "SubmissionStatus": {
-        "type": "string",
+        "type": "object",
         "description": "Submission status",
-        "enum": [
-          "RECEIVED",
-          "EVALUATION_IN_PROGRESS",
-          "INVALID",
-          "ACCEPTED",
-          "REJECTED",
-          "VALIDATED",
-          "SCORED",
-          "CANCELLED"
-        ]
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Submission status",
+            "enum": [
+              "RECEIVED",
+              "SUBMITTED",
+              "EVALUATION_IN_PROGRESS",
+              "INVALID",
+              "ACCEPTED",
+              "REJECTED"
+            ]
+          },
+          "numberOfRuns": {
+            "type": "integer",
+            "description": "Number of times submission has been executed"
+          }
+        }
       },
       "DockerSubmission": {
         "type": "object",
@@ -1159,10 +1167,9 @@
             "type": "string",
             "description": "Name of submission"
           },
-          "submissionId": {
+          "id": {
             "type": "integer",
-            "description": "Submission Id",
-            "readOnly": true
+            "description": "Submission Id"
           },
           "submitter": {
             "type": "string",
@@ -1170,8 +1177,138 @@
           },
           "queueId": {
             "type": "string",
-            "description": "Queue Id",
-            "readOnly": true
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "docker": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Docker repository name"
+              },
+              "digest": {
+                "type": "string",
+                "description": "Docker digest"
+              },
+              "entrypoint": {
+                "type": "string",
+                "description": "Docker entrypoint.  The default assumes that the docker image is built with a predefined entrypoint."
+              }
+            },
+            "required": [
+              "name",
+              "digest"
+            ]
+          }
+        }
+      },
+      "WorkflowSubmission": {
+        "type": "object",
+        "description": "A workflow Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Submission Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "workflow": {
+            "type": "string",
+            "description": "Workflow to run"
+          },
+          "workflowInputs": {
+            "type": "string",
+            "description": "Worklfow inputs"
+          }
+        }
+      },
+      "FileSubmission": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Submission Id"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "queueId": {
+            "type": "string",
+            "description": "Queue Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        }
+      },
+      "ListSubmissionResponse": {
+        "type": "object",
+        "description": "A page of queues",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListResponseMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "submissions": {
+                "description": "An array of queues",
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DockerSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkflowSubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/FileSubmission"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "CreateDockerSubmissionRequest": {
+        "type": "object",
+        "description": "A Docker Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1204,7 +1341,33 @@
           "docker"
         ]
       },
-      "WorkflowSubmission": {
+      "CreateFileSubmissionRequest": {
+        "type": "object",
+        "description": "A file Submission",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of submission"
+          },
+          "submitter": {
+            "type": "string",
+            "description": "Submitter name"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "file": {
+            "type": "string",
+            "description": "File to submit to challenge"
+          }
+        },
+        "required": [
+          "name",
+          "submitter",
+          "file"
+        ]
+      },
+      "CreateWorkflowSubmissionRequest": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
@@ -1212,19 +1375,9 @@
             "type": "string",
             "description": "Name of submission"
           },
-          "submissionId": {
-            "type": "integer",
-            "description": "Submission Id",
-            "readOnly": true
-          },
           "submitter": {
             "type": "string",
             "description": "Submitter name"
-          },
-          "queueId": {
-            "type": "string",
-            "description": "Queue Id",
-            "readOnly": true
           },
           "status": {
             "$ref": "#/components/schemas/SubmissionStatus"
@@ -1243,74 +1396,7 @@
           "submitter"
         ]
       },
-      "FileSubmission": {
-        "type": "object",
-        "description": "A file Submission",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of submission"
-          },
-          "submissionId": {
-            "type": "integer",
-            "description": "Submission Id",
-            "readOnly": true
-          },
-          "submitter": {
-            "type": "string",
-            "description": "Submitter name"
-          },
-          "queueId": {
-            "type": "string",
-            "description": "Queue Id",
-            "readOnly": true
-          },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
-          "file": {
-            "type": "string",
-            "description": "File to submit to challenge"
-          }
-        },
-        "required": [
-          "name",
-          "submitter",
-          "file"
-        ]
-      },
-      "SubmissionListResponse": {
-        "type": "object",
-        "description": "A page of queues",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ListResponseMetadata"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "submissions": {
-                "description": "An array of queues",
-                "type": "array",
-                "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DockerSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/WorkflowSubmission"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FileSubmission"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      },
-      "SubmissionId": {
+      "CreateSubmissionResponse": {
         "type": "object",
         "properties": {
           "submissionId": {
@@ -1327,7 +1413,7 @@
           }
         }
       },
-      "Run": {
+      "CreateRunRequest": {
         "type": "object",
         "properties": {
           "data": {
@@ -1340,7 +1426,7 @@
           }
         }
       },
-      "RunId": {
+      "CreateRunResponse": {
         "type": "object",
         "properties": {
           "runId": {
@@ -1348,6 +1434,37 @@
             "description": "workflow run ID"
           }
         }
+      },
+      "Run": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Run Id"
+          },
+          "data": {
+            "type": "string",
+            "description": "Data location"
+          },
+          "dataVersion": {
+            "type": "string",
+            "description": "Data version"
+          },
+          "status": {
+            "type": "string",
+            "description": "Submission Run status",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "COMPLETE",
+              "ERROR",
+              "CANCELLED"
+            ]
+          }
+        }
+      },
+      "Empty": {
+        "type": "object"
       },
       "Log": {
         "type": "object",
@@ -1390,9 +1507,8 @@
           }
         }
       },
-      "WesComputeEnvResponse": {
+      "ComputeEnv": {
         "type": "object",
-        "description": "A workflow Submission",
         "properties": {
           "id": {
             "type": "string",
@@ -1402,14 +1518,22 @@
             "type": "string",
             "description": "Name of compute environment"
           },
-          "wesApiHost": {
+          "apiHost": {
             "default": "localhost:8080",
             "type": "string",
             "description": "Workflow Execution Service implementation endpoint"
+          },
+          "type": {
+            "description": "Type of Compute Environment",
+            "type": "string",
+            "enum": [
+              "WES",
+              "TES"
+            ]
           }
         }
       },
-      "ComputeEnvListResponse": {
+      "ListComputeEnvResponse": {
         "type": "object",
         "description": "A page of queues",
         "allOf": [
@@ -1423,18 +1547,14 @@
                 "description": "An array of queues",
                 "type": "array",
                 "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/WesComputeEnvResponse"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ComputeEnv"
                 }
               }
             }
           }
         ]
       },
-      "WesComputeEnv": {
+      "CreateComputeEnvRequest": {
         "type": "object",
         "description": "A workflow Submission",
         "properties": {
@@ -1442,14 +1562,22 @@
             "type": "string",
             "description": "Name of compute environment"
           },
-          "wesApiHost": {
+          "apiHost": {
             "default": "localhost:8080",
             "type": "string",
             "description": "Workflow Execution Service implementation endpoint"
+          },
+          "type": {
+            "description": "Type of Compute Environment",
+            "type": "string",
+            "enum": [
+              "WES",
+              "TES"
+            ]
           }
         }
       },
-      "ComputeEnvId": {
+      "CreateComputeEnvResponse": {
         "type": "object",
         "properties": {
           "computeEnvId": {
@@ -1458,7 +1586,7 @@
           }
         }
       },
-      "Team": {
+      "CreateTeamRequest": {
         "type": "object",
         "properties": {
           "teamId": {
@@ -1476,7 +1604,7 @@
           }
         }
       },
-      "TeamId": {
+      "CreateTeamResponse": {
         "type": "object",
         "properties": {
           "teamId": {

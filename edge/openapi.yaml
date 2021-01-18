@@ -14,8 +14,6 @@ info:
 servers:
   - url: /
 tags:
-  - description: Ceate and link synapse queues with workflow engines
-    name: Queue
   - description: Compute environment
     name: Compute
   - description: Allow synapse submissions to interact with supported workflow engines
@@ -23,6 +21,14 @@ tags:
       description: Mimics GA4GH
       url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
     name: Execution
+  - description: Ceate and link synapse queues with workflow engines
+    name: Queue
+  - description: Submission and its metadata
+    externalDocs:
+      description: More about submission references
+      url: >-
+        https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
+    name: Submission
   - description: Submission and its metadata
     externalDocs:
       description: More about submission references
@@ -41,13 +47,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Queue'
+              $ref: '#/components/schemas/CreateQueueRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueId'
+                $ref: '#/components/schemas/CreateQueueResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -84,7 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueListResponse'
+                $ref: '#/components/schemas/ListQueueResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -110,7 +116,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -145,7 +151,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -169,15 +175,15 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/DockerSubmission'
-                - $ref: '#/components/schemas/FileSubmission'
-                - $ref: '#/components/schemas/WorkflowSubmission'
+                - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
+                - $ref: '#/components/schemas/CreateFileSubmissionRequest'
+                - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionId'
+                $ref: '#/components/schemas/CreateSubmissionResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -214,7 +220,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionListResponse'
+                $ref: '#/components/schemas/ListSubmissionResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -350,13 +356,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Run'
+              $ref: '#/components/schemas/CreateRunRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunId'
+                $ref: '#/components/schemas/CreateRunResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -396,7 +402,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RunId'
+                $ref: '#/components/schemas/Run'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -446,7 +452,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RunId'
+              $ref: '#/components/schemas/Empty'
       responses:
         '204':
           description: The run was cancelled.
@@ -504,14 +510,13 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/WesComputeEnv'
+              $ref: '#/components/schemas/CreateComputeEnvRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComputeEnvId'
+                $ref: '#/components/schemas/CreateComputeEnvResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -548,7 +553,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComputeEnvListResponse'
+                $ref: '#/components/schemas/ListComputeEnvResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -574,8 +579,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/WesComputeEnvResponse'
+                $ref: '#/components/schemas/ComputeEnv'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -604,13 +608,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              $ref: '#/components/schemas/CreateTeamRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamId'
+                $ref: '#/components/schemas/CreateTeamResponse'
           description: Success
         '403':
           $ref: '#/components/responses/Unauthorized'
@@ -641,7 +645,7 @@ components:
         - offset
         - limit
         - links
-    QueueResponse:
+    Queue:
       type: object
       description: A Queue to link submissions to runtime
       properties:
@@ -674,7 +678,7 @@ components:
             - file
             - workflow
             - workflow_inputs
-    QueueListResponse:
+    ListQueueResponse:
       type: object
       description: A page of queues
       allOf:
@@ -685,7 +689,7 @@ components:
               description: An array of queues
               type: array
               items:
-                $ref: '#/components/schemas/QueueResponse'
+                $ref: '#/components/schemas/Queue'
     Error:
       type: object
       description: Problem details (tools.ietf.org/html/rfc7807)
@@ -707,7 +711,7 @@ components:
       required:
         - title
         - status
-    Queue:
+    CreateQueueRequest:
       type: object
       description: A Queue to link submissions to runtime
       properties:
@@ -733,24 +737,29 @@ components:
             - file
             - workflow
             - workflow_inputs
-    QueueId:
+    CreateQueueResponse:
       type: object
       properties:
         queueId:
           type: string
           description: Queue ID
     SubmissionStatus:
-      type: string
+      type: object
       description: Submission status
-      enum:
-        - RECEIVED
-        - EVALUATION_IN_PROGRESS
-        - INVALID
-        - ACCEPTED
-        - REJECTED
-        - VALIDATED
-        - SCORED
-        - CANCELLED
+      properties:
+        status:
+          type: string
+          description: Submission status
+          enum:
+            - RECEIVED
+            - SUBMITTED
+            - EVALUATION_IN_PROGRESS
+            - INVALID
+            - ACCEPTED
+            - REJECTED
+        numberOfRuns:
+          type: integer
+          description: Number of times submission has been executed
     DockerSubmission:
       type: object
       description: A Docker Submission
@@ -758,17 +767,104 @@ components:
         name:
           type: string
           description: Name of submission
-        submissionId:
+        id:
           type: integer
           description: Submission Id
-          readOnly: true
         submitter:
           type: string
           description: Submitter name
         queueId:
           type: string
           description: Queue Id
-          readOnly: true
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        docker:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Docker repository name
+            digest:
+              type: string
+              description: Docker digest
+            entrypoint:
+              type: string
+              description: >-
+                Docker entrypoint.  The default assumes that the docker image is
+                built with a predefined entrypoint.
+          required:
+            - name
+            - digest
+    WorkflowSubmission:
+      type: object
+      description: A workflow Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        workflow:
+          type: string
+          description: Workflow to run
+        workflowInputs:
+          type: string
+          description: Worklfow inputs
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
+    ListSubmissionResponse:
+      type: object
+      description: A page of queues
+      allOf:
+        - $ref: '#/components/schemas/ListResponseMetadata'
+        - type: object
+          properties:
+            submissions:
+              description: An array of queues
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+    CreateDockerSubmissionRequest:
+      type: object
+      description: A Docker Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        submitter:
+          type: string
+          description: Submitter name
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         docker:
@@ -792,24 +888,35 @@ components:
         - name
         - submitter
         - docker
-    WorkflowSubmission:
+    CreateFileSubmissionRequest:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        submitter:
+          type: string
+          description: Submitter name
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
+      required:
+        - name
+        - submitter
+        - file
+    CreateWorkflowSubmissionRequest:
       type: object
       description: A workflow Submission
       properties:
         name:
           type: string
           description: Name of submission
-        submissionId:
-          type: integer
-          description: Submission Id
-          readOnly: true
         submitter:
           type: string
           description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-          readOnly: true
         status:
           $ref: '#/components/schemas/SubmissionStatus'
         workflow:
@@ -821,49 +928,7 @@ components:
       required:
         - name
         - submitter
-    FileSubmission:
-      type: object
-      description: A file Submission
-      properties:
-        name:
-          type: string
-          description: Name of submission
-        submissionId:
-          type: integer
-          description: Submission Id
-          readOnly: true
-        submitter:
-          type: string
-          description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-          readOnly: true
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
-        file:
-          type: string
-          description: File to submit to challenge
-      required:
-        - name
-        - submitter
-        - file
-    SubmissionListResponse:
-      type: object
-      description: A page of queues
-      allOf:
-        - $ref: '#/components/schemas/ListResponseMetadata'
-        - type: object
-          properties:
-            submissions:
-              description: An array of queues
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-    SubmissionId:
+    CreateSubmissionResponse:
       type: object
       properties:
         submissionId:
@@ -874,7 +939,7 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/SubmissionStatus'
-    Run:
+    CreateRunRequest:
       type: object
       properties:
         data:
@@ -883,12 +948,35 @@ components:
         dataVersion:
           type: string
           description: Data version
-    RunId:
+    CreateRunResponse:
       type: object
       properties:
         runId:
           type: string
           description: workflow run ID
+    Run:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Run Id
+        data:
+          type: string
+          description: Data location
+        dataVersion:
+          type: string
+          description: Data version
+        status:
+          type: string
+          description: Submission Run status
+          enum:
+            - QUEUED
+            - RUNNING
+            - COMPLETE
+            - ERROR
+            - CANCELLED
+    Empty:
+      type: object
     Log:
       type: object
       description: Log and other info
@@ -933,9 +1021,8 @@ components:
         output:
           type: string
           description: Output of workflow
-    WesComputeEnvResponse:
+    ComputeEnv:
       type: object
-      description: A workflow Submission
       properties:
         id:
           type: string
@@ -943,11 +1030,17 @@ components:
         name:
           type: string
           description: Name of compute environment
-        wesApiHost:
+        apiHost:
           default: 'localhost:8080'
           type: string
           description: Workflow Execution Service implementation endpoint
-    ComputeEnvListResponse:
+        type:
+          description: Type of Compute Environment
+          type: string
+          enum:
+            - WES
+            - TES
+    ListComputeEnvResponse:
       type: object
       description: A page of queues
       allOf:
@@ -958,26 +1051,31 @@ components:
               description: An array of queues
               type: array
               items:
-                oneOf:
-                  - $ref: '#/components/schemas/WesComputeEnvResponse'
-    WesComputeEnv:
+                $ref: '#/components/schemas/ComputeEnv'
+    CreateComputeEnvRequest:
       type: object
       description: A workflow Submission
       properties:
         name:
           type: string
           description: Name of compute environment
-        wesApiHost:
+        apiHost:
           default: 'localhost:8080'
           type: string
           description: Workflow Execution Service implementation endpoint
-    ComputeEnvId:
+        type:
+          description: Type of Compute Environment
+          type: string
+          enum:
+            - WES
+            - TES
+    CreateComputeEnvResponse:
       type: object
       properties:
         computeEnvId:
           type: string
           description: Compute environment ID
-    Team:
+    CreateTeamRequest:
       type: object
       properties:
         teamId:
@@ -990,7 +1088,7 @@ components:
         description:
           type: string
           description: Description of Team.
-    TeamId:
+    CreateTeamResponse:
       type: object
       properties:
         teamId:
