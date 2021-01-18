@@ -1,8 +1,5 @@
 type: object
 properties:
-  id:
-    type: string
-    description: Run Id
   data:
     type: string
     description: Data location
