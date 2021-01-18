@@ -175,9 +175,9 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/DockerSubmission'
-                - $ref: '#/components/schemas/FileSubmission'
-                - $ref: '#/components/schemas/WorkflowSubmission'
+                - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
+                - $ref: '#/components/schemas/CreateFileSubmissionRequest'
+                - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
       responses:
         '201':
           content:
@@ -762,6 +762,101 @@ components:
         name:
           type: string
           description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        docker:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Docker repository name
+            digest:
+              type: string
+              description: Docker digest
+            entrypoint:
+              type: string
+              description: >-
+                Docker entrypoint.  The default assumes that the docker image is
+                built with a predefined entrypoint.
+          required:
+            - name
+            - digest
+    WorkflowSubmission:
+      type: object
+      description: A workflow Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        workflow:
+          type: string
+          description: Workflow to run
+        workflowInputs:
+          type: string
+          description: Worklfow inputs
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
+    ListSubmissionResponse:
+      type: object
+      description: A page of queues
+      allOf:
+        - $ref: '#/components/schemas/ListResponseMetadata'
+        - type: object
+          properties:
+            submissions:
+              description: An array of queues
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/DockerSubmission'
+                  - $ref: '#/components/schemas/WorkflowSubmission'
+                  - $ref: '#/components/schemas/FileSubmission'
+    CreateDockerSubmissionRequest:
+      type: object
+      description: A Docker Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
         submissionId:
           type: integer
           description: Submission Id
@@ -796,7 +891,34 @@ components:
         - name
         - submitter
         - docker
-    WorkflowSubmission:
+    CreateFileSubmissionRequest:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        submissionId:
+          type: integer
+          description: Submission Id
+          readOnly: true
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
+      required:
+        - name
+        - submitter
+        - file
+    CreateWorkflowSubmissionRequest:
       type: object
       description: A workflow Submission
       properties:
@@ -825,48 +947,6 @@ components:
       required:
         - name
         - submitter
-    FileSubmission:
-      type: object
-      description: A file Submission
-      properties:
-        name:
-          type: string
-          description: Name of submission
-        submissionId:
-          type: integer
-          description: Submission Id
-          readOnly: true
-        submitter:
-          type: string
-          description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-          readOnly: true
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
-        file:
-          type: string
-          description: File to submit to challenge
-      required:
-        - name
-        - submitter
-        - file
-    ListSubmissionResponse:
-      type: object
-      description: A page of queues
-      allOf:
-        - $ref: '#/components/schemas/ListResponseMetadata'
-        - type: object
-          properties:
-            submissions:
-              description: An array of queues
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
     CreateSubmissionResponse:
       type: object
       properties:
