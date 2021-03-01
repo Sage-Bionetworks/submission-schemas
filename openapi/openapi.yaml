@@ -40,19 +40,21 @@ paths:
     $ref: paths/submissions.yaml
   /queues/{queueId}/submissions/{submissionId}:
     $ref: paths/submissions@{submissionId}.yaml
-  /queues/{queueId}/submissions/{submissionId}/status:
-    $ref: paths/submissions@{submissionId}@status.yaml
-  /queues/{queueId}/submissions/{submissionId}/runs:
-    $ref: paths/runs.yaml
-  /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
-    $ref: paths/runs@{runId}.yaml
-  /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
-    $ref: paths/runs@{runId}@cancel.yaml
-  /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
-    $ref: paths/runs@{runId}@log.yaml
-  /computeEnvs:
-    $ref: paths/computeEnvs.yaml
-  /computeEnvs/{computeEnvId}:
-    $ref: paths/computeEnvs@{computeEnvId}.yaml
-  /teams:
-    $ref: paths/teams.yaml
+  # /queues/{queueId}/submissions/{submissionId}/status:
+  #   $ref: paths/submissions@{submissionId}@status.yaml
+  # /queues/{queueId}/submissions/{submissionId}/runs:
+  #   $ref: paths/runs.yaml
+  # /queues/{queueId}/submissions/{submissionId}/runs/{runId}:
+  #   $ref: paths/runs@{runId}.yaml
+  # /queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel:
+  #   $ref: paths/runs@{runId}@cancel.yaml
+  # /queues/{queueId}/submissions/{submissionId}/runs/{runId}/log:
+  #   $ref: paths/runs@{runId}@log.yaml
+  # # /computeEnvs:
+  #   $ref: paths/computeEnvs.yaml
+  # /computeEnvs/{computeEnvId}:
+  #   $ref: paths/computeEnvs@{computeEnvId}.yaml
+  # /teams:
+  #   $ref: paths/teams.yaml
+  /healthCheck:
+    $ref: paths/healthCheck.yaml

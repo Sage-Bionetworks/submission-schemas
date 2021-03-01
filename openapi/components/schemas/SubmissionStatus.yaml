@@ -1,4 +1,16 @@
 type: object
+description: Submission status
 properties:
   status:
-    $ref: ../definitions/SubmissionStatus.yaml
+    type: string
+    description: Submission status
+    enum:
+      - RECEIVED
+      - SUBMITTED
+      - EVALUATION_IN_PROGRESS
+      - INVALID
+      - ACCEPTED
+      - REJECTED
+  numberOfRuns:
+    type: integer
+    description: Number of times submission has been executed

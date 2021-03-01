@@ -15,10 +15,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: ../components/schemas/CreateDockerSubmissionRequest.yaml
-            - $ref: ../components/schemas/CreateFileSubmissionRequest.yaml
-            - $ref: ../components/schemas/CreateWorkflowSubmissionRequest.yaml
+          $ref: ../components/schemas/CreateSubmissionRequest.yaml
   responses:
     '201':
       content:
@@ -67,3 +64,5 @@ get:
       $ref: ../components/responses/Unauthorized.yaml
     '404':
       $ref: ../components/responses/NotFound.yaml
+    '500':
+      $ref: ../components/responses/InternalServerError.yaml

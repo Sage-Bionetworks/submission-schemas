@@ -8,7 +8,7 @@ properties:
     type: string
     description: Submitter name
   status:
-    $ref: ../definitions/SubmissionStatus.yaml
+    $ref: SubmissionStatus.yaml
   file:
     type: string
     description: File to submit to challenge
