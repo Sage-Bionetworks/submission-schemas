@@ -205,44 +205,6 @@
             "$ref": "#/components/responses/InternalServerError"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Queue"
-        ],
-        "summary": "Update a queue by its ID",
-        "description": "Updates the queue for a given ID",
-        "operationId": "updateQueue",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Queue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Queue"
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
       }
     },
     "/queues/{queueId}/submissions": {
@@ -413,44 +375,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Submission"
-        ],
-        "summary": "Update a submission by its ID",
-        "description": "Updates the submission for a given ID",
-        "operationId": "updateSubmission",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Submission"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Submission"
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
