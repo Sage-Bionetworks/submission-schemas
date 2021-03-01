@@ -92,6 +92,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/queues/{queueId}':
     parameters:
       - in: path
@@ -117,6 +119,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     delete:
       tags:
         - Queue
@@ -130,6 +134,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     put:
       tags:
         - Queue
@@ -152,6 +158,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/queues/{queueId}/submissions':
     parameters:
       - in: path
@@ -170,10 +178,7 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
-                - $ref: '#/components/schemas/CreateFileSubmissionRequest'
-                - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
+              $ref: '#/components/schemas/CreateSubmissionRequest'
       responses:
         '201':
           content:
@@ -222,6 +227,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/queues/{queueId}/submissions/{submissionId}':
     parameters:
       - in: path
@@ -248,10 +255,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
+                $ref: '#/components/schemas/Submission'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -279,345 +283,38 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/DockerSubmission'
-                - $ref: '#/components/schemas/FileSubmission'
-                - $ref: '#/components/schemas/WorkflowSubmission'
+              $ref: '#/components/schemas/Submission'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
+                $ref: '#/components/schemas/Submission'
         '403':
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queues/{queueId}/submissions/{submissionId}/status':
-    parameters:
-      - in: path
-        name: queueId
-        description: The ID of the queue
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: submissionId
-        description: The ID of the submission
-        required: true
-        schema:
-          type: string
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /healthCheck:
     get:
       tags:
-        - Submission
-      summary: Get a submission's status
-      description: Returns the submission's status for a given ID
-      operationId: getSubmissionStatus
+        - HealthCheck
+      summary: Get health check information
+      description: Get information about the health of the service
+      operationId: getHealthCheck
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmissionStatus-2'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
+                $ref: '#/components/schemas/HealthCheck'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/queues/{queueId}/submissions/{submissionId}/runs':
-    parameters:
-      - in: path
-        name: queueId
-        description: The ID of the queue
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: submissionId
-        description: The ID of the submission
-        required: true
-        schema:
-          type: string
-    post:
-      tags:
-        - Execution
-      summary: Executes a submission
-      description: Executes a submission
-      operationId: runSubmission
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRunRequest'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateRunResponse'
-          description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
-  '/queues/{queueId}/submissions/{submissionId}/runs/{runId}':
-    parameters:
-      - in: path
-        name: queueId
-        description: The ID of the queue
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: runId
-        description: The ID of the run
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: submissionId
-        description: The ID of the submission
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - Execution
-      summary: Get a submission run
-      description: Returns the run for a submission
-      operationId: getSubmissionRun
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Run'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-    delete:
-      tags:
-        - Execution
-      summary: Delete a submission run
-      description: Deletes the run for a submission
-      operationId: deleteSubmissionRun
-      responses:
-        '204':
-          description: The resource was deleted successfully.
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/queues/{queueId}/submissions/{submissionId}/runs/{runId}/cancel':
-    parameters:
-      - in: path
-        name: queueId
-        description: The ID of the queue
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: runId
-        description: The ID of the run
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: submissionId
-        description: The ID of the submission
-        required: true
-        schema:
-          type: string
-    post:
-      tags:
-        - Execution
-      summary: Cancels a submission's run
-      description: >-
-        Cancels the submission's run for a given run ID. This is dependant on
-        how the compute environment cancels runs.
-      operationId: cancelSubmissionRun
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Empty'
-      responses:
-        '204':
-          description: The run was cancelled.
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/queues/{queueId}/submissions/{submissionId}/runs/{runId}/log':
-    parameters:
-      - in: path
-        name: queueId
-        description: The ID of the queue
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: runId
-        description: The ID of the run
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: submissionId
-        description: The ID of the submission
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - Execution
-      summary: Get a submission's run logs
-      description: >-
-        Returns the submission's logs for a given run ID. This is dependant on
-        how the compute environment returns logs.
-      operationId: getSubmissionRunLog
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Log'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /computeEnvs:
-    post:
-      tags:
-        - Compute
-      summary: Create a compute environment
-      description: Creates a compute environment
-      operationId: createComputeEnv
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateComputeEnvRequest'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateComputeEnvResponse'
-          description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
-    get:
-      tags:
-        - Compute
-      summary: List the available compute environments
-      description: Returns the available compute environments
-      operationId: listComputeEnvs
-      parameters:
-        - in: query
-          name: limit
-          description: Maximum number of results returned
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 10
-            maximum: 100
-        - in: query
-          name: offset
-          description: Index of the first result that must be returned
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListComputeEnvResponse'
-          description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/computeEnvs/{computeEnvId}':
-    parameters:
-      - in: path
-        name: computeEnvId
-        description: The ID of the compute environment
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - Compute
-      summary: Get a compute env by its ID
-      description: Returns the compute env for a given ID
-      operationId: getComputeEnv
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ComputeEnv'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-    delete:
-      tags:
-        - Compute
-      summary: Delete a compute environment by its ID
-      description: Deletes the compute environment for a given ID
-      operationId: deleteComputeEnv
-      responses:
-        '204':
-          description: The resource was deleted successfully.
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /teams:
-    post:
-      tags:
-        - Team
-      summary: Create a Team
-      description: Creates a team for submitting
-      operationId: createTeam
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateTeamRequest'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateTeamResponse'
-          description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
     ListResponseMetadata:
@@ -637,10 +334,14 @@ components:
             next:
               description: Link to the next page of results
               type: string
+        totalResults:
+          description: The total number of results in the result set
+          type: integer
       required:
         - offset
         - limit
         - links
+        - totalResults
     Queue:
       type: object
       description: A Queue to link submissions to runtime
@@ -791,6 +492,27 @@ components:
           required:
             - name
             - digest
+    FileSubmission:
+      type: object
+      description: A file Submission
+      properties:
+        name:
+          type: string
+          description: Name of submission
+        id:
+          type: integer
+          description: Submission Id
+        submitter:
+          type: string
+          description: Submitter name
+        queueId:
+          type: string
+          description: Queue Id
+        status:
+          $ref: '#/components/schemas/SubmissionStatus'
+        file:
+          type: string
+          description: File to submit to challenge
     WorkflowSubmission:
       type: object
       description: A workflow Submission
@@ -815,27 +537,11 @@ components:
         workflowInputs:
           type: string
           description: Worklfow inputs
-    FileSubmission:
-      type: object
-      description: A file Submission
-      properties:
-        name:
-          type: string
-          description: Name of submission
-        id:
-          type: integer
-          description: Submission Id
-        submitter:
-          type: string
-          description: Submitter name
-        queueId:
-          type: string
-          description: Queue Id
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
-        file:
-          type: string
-          description: File to submit to challenge
+    Submission:
+      oneOf:
+        - $ref: '#/components/schemas/DockerSubmission'
+        - $ref: '#/components/schemas/FileSubmission'
+        - $ref: '#/components/schemas/WorkflowSubmission'
     ListSubmissionResponse:
       type: object
       description: A page of queues
@@ -847,10 +553,7 @@ components:
               description: An array of queues
               type: array
               items:
-                oneOf:
-                  - $ref: '#/components/schemas/DockerSubmission'
-                  - $ref: '#/components/schemas/WorkflowSubmission'
-                  - $ref: '#/components/schemas/FileSubmission'
+                $ref: '#/components/schemas/Submission'
     CreateDockerSubmissionRequest:
       type: object
       description: A Docker Submission
@@ -920,176 +623,34 @@ components:
           description: Workflow to run
         workflowInputs:
           type: string
-          description: Worklfow inputs
+          description: Workflow inputs
       required:
         - name
         - submitter
+    CreateSubmissionRequest:
+      oneOf:
+        - $ref: '#/components/schemas/CreateDockerSubmissionRequest'
+        - $ref: '#/components/schemas/CreateFileSubmissionRequest'
+        - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
     CreateSubmissionResponse:
       type: object
       properties:
         submissionId:
           type: string
           description: Submission ID
-    SubmissionStatus-2:
+    HealthCheck:
       type: object
+      description: Represents the health of a service
       properties:
         status:
-          $ref: '#/components/schemas/SubmissionStatus'
-    CreateRunRequest:
-      type: object
-      properties:
-        data:
-          type: string
-          description: Data location
-        dataVersion:
-          type: string
-          description: Data version
-    CreateRunResponse:
-      type: object
-      properties:
-        runId:
-          type: string
-          description: workflow run ID
-    Run:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Run Id
-        data:
-          type: string
-          description: Data location
-        dataVersion:
-          type: string
-          description: Data version
-        status:
-          type: string
-          description: Submission Run status
-          enum:
-            - QUEUED
-            - RUNNING
-            - COMPLETE
-            - ERROR
-            - CANCELLED
-    Empty:
-      type: object
-    Log:
-      type: object
-      description: Log and other info
-      properties:
-        name:
-          type: string
-          description: The task or workflow name
-        cmd:
-          type: array
-          items:
-            type: string
-          description: The command line that was executed
-        startTime:
-          type: string
-          description: >-
-            When the command started executing, in ISO 8601 format
-            "%Y-%m-%dT%H:%M:%SZ"
-        endTime:
-          type: string
-          description: >-
-            When the command stopped executing (completed, failed, or
-            cancelled), in ISO 8601 format "%Y-%m-%dT%H:%M:%SZ"
-        stdout:
-          type: string
-          description: >-
-            A URL to retrieve standard output logs of the workflow run or task. 
-            This URL may change between status requests, or may not be available
-            until the task or workflow has finished execution.  Should be
-            available using the same credentials used to access the WES
-            endpoint.
-        stderr:
-          type: string
-          description: >-
-            A URL to retrieve standard error logs of the workflow run or task. 
-            This URL may change between status requests, or may not be available
-            until the task or workflow has finished execution.  Should be
-            available using the same credentials used to access the WES
-            endpoint.
-        exitCode:
-          type: integer
-          description: Exit code of the program
-        output:
-          type: string
-          description: Output of workflow
-    ComputeEnv:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Compute environment ID
-        name:
-          type: string
-          description: Name of compute environment
-        apiHost:
-          default: 'localhost:8080'
-          type: string
-          description: Workflow Execution Service implementation endpoint
-        type:
-          description: Type of Compute Environment
+          description: Indicates whether the service status is acceptable or not
           type: string
           enum:
-            - WES
-            - TES
-    ListComputeEnvResponse:
-      type: object
-      description: A page of queues
-      allOf:
-        - $ref: '#/components/schemas/ListResponseMetadata'
-        - type: object
-          properties:
-            computeEnvs:
-              description: An array of queues
-              type: array
-              items:
-                $ref: '#/components/schemas/ComputeEnv'
-    CreateComputeEnvRequest:
-      type: object
-      description: A workflow Submission
-      properties:
-        name:
-          type: string
-          description: Name of compute environment
-        apiHost:
-          default: 'localhost:8080'
-          type: string
-          description: Workflow Execution Service implementation endpoint
-        type:
-          description: Type of Compute Environment
-          type: string
-          enum:
-            - WES
-            - TES
-    CreateComputeEnvResponse:
-      type: object
-      properties:
-        computeEnvId:
-          type: string
-          description: Compute environment ID
-    CreateTeamRequest:
-      type: object
-      properties:
-        teamId:
-          type: string
-          description: ID of team.
-          readOnly: true
-        name:
-          type: string
-          description: Name of team.
-        description:
-          type: string
-          description: Description of Team.
-    CreateTeamResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-          description: Team ID
+            - pass
+            - fail
+            - warn
+      required:
+        - status
   responses:
     Unauthorized:
       description: Unauthorized
@@ -1099,6 +660,12 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: The request cannot be fulfilled due to an unexpected server error
       content:
         application/json:
           schema:
