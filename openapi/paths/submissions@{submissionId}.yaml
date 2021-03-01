@@ -41,27 +41,27 @@ delete:
       $ref: ../components/responses/Unauthorized.yaml
     '404':
       $ref: ../components/responses/NotFound.yaml
-put:
-  tags:
-    - Submission
-  summary: Update a submission by its ID
-  description: Updates the submission for a given ID
-  operationId: "updateSubmission"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: ../components/schemas/Submission.yaml
-  responses:
-    '200':
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Submission.yaml
-    '403':
-      $ref: ../components/responses/Unauthorized.yaml
-    '404':
-      $ref: ../components/responses/NotFound.yaml
-    '500':
-      $ref: ../components/responses/InternalServerError.yaml
+# put:
+#   tags:
+#     - Submission
+#   summary: Update a submission by its ID
+#   description: Updates the submission for a given ID
+#   operationId: "updateSubmission"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: ../components/schemas/Submission.yaml
+#   responses:
+#     '200':
+#       description: Success
+#       content:
+#         application/json:
+#           schema:
+#             $ref: ../components/schemas/Submission.yaml
+#     '403':
+#       $ref: ../components/responses/Unauthorized.yaml
+#     '404':
+#       $ref: ../components/responses/NotFound.yaml
+#     '500':
+#       $ref: ../components/responses/InternalServerError.yaml

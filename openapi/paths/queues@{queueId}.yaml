@@ -39,27 +39,27 @@ delete:
       $ref: ../components/responses/NotFound.yaml
     '500':
       $ref: ../components/responses/InternalServerError.yaml
-put:
-  tags:
-    - Queue
-  summary: Update a queue by its ID
-  description: Updates the queue for a given ID
-  operationId: "updateQueue"
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: ../components/schemas/Queue.yaml
-  responses:
-    '200':
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Queue.yaml
-    '403':
-      $ref: ../components/responses/Unauthorized.yaml
-    '404':
-      $ref: ../components/responses/NotFound.yaml
-    '500':
-      $ref: ../components/responses/InternalServerError.yaml
+# put:
+#   tags:
+#     - Queue
+#   summary: Update a queue by its ID
+#   description: Updates the queue for a given ID
+#   operationId: "updateQueue"
+#   requestBody:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: ../components/schemas/Queue.yaml
+#   responses:
+#     '200':
+#       description: Success
+#       content:
+#         application/json:
+#           schema:
+#             $ref: ../components/schemas/Queue.yaml
+#     '403':
+#       $ref: ../components/responses/Unauthorized.yaml
+#     '404':
+#       $ref: ../components/responses/NotFound.yaml
+#     '500':
+#       $ref: ../components/responses/InternalServerError.yaml
