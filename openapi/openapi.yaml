@@ -57,4 +57,4 @@ paths:
   # /teams:
   #   $ref: paths/teams.yaml
   /healthCheck:
-    $ref: ../commons/paths/healthCheck.yaml
+    $ref: paths/healthCheck.yaml
