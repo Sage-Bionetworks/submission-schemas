@@ -1,4 +1,5 @@
 type: object
+description: The ID of a submission.
 properties:
   submissionId:
     type: string

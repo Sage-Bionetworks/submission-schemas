@@ -21,3 +21,14 @@ properties:
   workflowInputs:
     type: string
     description: Worklfow inputs
+x-examples:
+  example-1:
+    name: string
+    id: 0
+    submitter: string
+    queueId: string
+    status:
+      status: RECEIVED
+      numberOfRuns: 0
+    workflow: string
+    workflowInputs: string

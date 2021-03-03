@@ -2,7 +2,11 @@ type: object
 description: A Queue to link submissions to runtime
 properties:
   name:
-    $ref: ../parameters/QueueName.yaml
+    type: string
+    description: Name of Queue
+    minLength: 3
+    maxLength: 60
+    pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
   computeId:
     type: string
     description: Compute Environment Id
