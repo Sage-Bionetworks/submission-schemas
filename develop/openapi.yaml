@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   contact:
     email: thomas.yu@sagebionetworks.org
@@ -12,15 +12,8 @@ info:
   title: Submission API
   version: 1.0.0
 servers:
-  - url: /
+  - url: ''
 tags:
-  - description: Compute environment
-    name: Compute
-  - description: Allow synapse submissions to interact with supported workflow engines
-    externalDocs:
-      description: Mimics GA4GH
-      url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
-    name: Execution
   - description: Ceate and link synapse queues with workflow engines
     name: Queue
   - description: Submission and its metadata
@@ -29,8 +22,8 @@ tags:
       url: >-
         https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
     name: Submission
-  - description: Teams
-    name: Team
+  - description: Health check
+    name: HealthCheck
 paths:
   /queues:
     post:
@@ -39,6 +32,13 @@ paths:
       summary: Create a queue
       description: Creates a queue for storing and running of submissions
       operationId: createQueue
+      parameters:
+        - in: query
+          name: queueId
+          description: The ID of the queue that is being created
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -64,23 +64,8 @@ paths:
       description: Returns the queues
       operationId: listQueues
       parameters:
-        - in: query
-          name: limit
-          description: Maximum number of results returned
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 10
-            maximum: 100
-        - in: query
-          name: offset
-          description: Index of the first result that must be returned
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
       responses:
         '200':
           content:
@@ -268,6 +253,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  parameters:
+    PageLimit:
+      in: query
+      name: limit
+      description: Maximum number of results returned
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 10
+        maximum: 100
+    PageOffset:
+      in: query
+      name: offset
+      description: Index of the first result that must be returned
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   schemas:
     ListResponseMetadata:
       type: object
@@ -367,6 +372,9 @@ components:
         name:
           type: string
           description: Name of Queue
+          minLength: 3
+          maxLength: 60
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
         computeId:
           type: string
           description: Compute Environment Id
@@ -386,8 +394,11 @@ components:
             - file
             - workflow
             - workflow_inputs
+      required:
+        - name
     CreateQueueResponse:
       type: object
+      description: Queue Id
       properties:
         queueId:
           type: string
@@ -489,6 +500,17 @@ components:
         workflowInputs:
           type: string
           description: Worklfow inputs
+      x-examples:
+        example-1:
+          name: string
+          id: 0
+          submitter: string
+          queueId: string
+          status:
+            status: RECEIVED
+            numberOfRuns: 0
+          workflow: string
+          workflowInputs: string
     Submission:
       oneOf:
         - $ref: '#/components/schemas/DockerSubmission'
@@ -586,6 +608,7 @@ components:
         - $ref: '#/components/schemas/CreateWorkflowSubmissionRequest'
     CreateSubmissionResponse:
       type: object
+      description: The ID of a submission.
       properties:
         submissionId:
           type: string
