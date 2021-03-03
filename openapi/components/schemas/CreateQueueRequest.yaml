@@ -2,8 +2,7 @@ type: object
 description: A Queue to link submissions to runtime
 properties:
   name:
-    type: string
-    description: Name of Queue
+    $ref: ../parameters/QueueName.yaml
   computeId:
     type: string
     description: Compute Environment Id
@@ -23,3 +22,5 @@ properties:
       - file
       - workflow
       - workflow_inputs
+required:
+  - name

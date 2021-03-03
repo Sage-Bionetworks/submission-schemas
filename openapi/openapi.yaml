@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   contact:
     email: thomas.yu@sagebionetworks.org
@@ -14,13 +14,13 @@ info:
 servers:
   - url: /
 tags:
-  - description: Compute environment
-    name: Compute
-  - description: Allow synapse submissions to interact with supported workflow engines
-    externalDocs:
-      description: Mimics GA4GH
-      url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
-    name: Execution
+  # - description: Compute environment
+  #   name: Compute
+  # - description: Allow synapse submissions to interact with supported workflow engines
+  #   externalDocs:
+  #     description: Mimics GA4GH
+  #     url: 'https://github.com/ga4gh/workflow-execution-service-schemas'
+  #   name: Execution
   - description: Ceate and link synapse queues with workflow engines
     name: Queue
   - description: Submission and its metadata
@@ -29,8 +29,8 @@ tags:
       url: >-
         https://rest-docs.synapse.org/rest/#org.sagebionetworks.repo.web.controller.EvaluationController
     name: Submission
-  - description: Teams
-    name: Team
+  # - description: Teams
+  #   name: Team
 paths:
   /queues:
     $ref: paths/queues.yaml
