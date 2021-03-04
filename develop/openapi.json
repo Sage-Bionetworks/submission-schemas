@@ -788,6 +788,7 @@
           },
           "docker": {
             "type": "object",
+            "description": "Docker repository",
             "properties": {
               "name": {
                 "type": "string",
