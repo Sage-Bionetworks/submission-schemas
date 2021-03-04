@@ -5,12 +5,12 @@ properties:
     type: string
     description: Submission status
     enum:
-      - RECEIVED
-      - SUBMITTED
-      - EVALUATION_IN_PROGRESS
-      - INVALID
-      - ACCEPTED
-      - REJECTED
+      - received
+      - submitted
+      - evaluation_in_progress
+      - invalid
+      - accepted
+      - rejected
   numberOfRuns:
     type: integer
     description: Number of times submission has been executed
