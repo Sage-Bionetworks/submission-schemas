@@ -98,10 +98,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Queue'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -113,10 +111,8 @@ paths:
       responses:
         '204':
           description: The resource was deleted successfully.
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
   '/queues/{queueId}/submissions':
