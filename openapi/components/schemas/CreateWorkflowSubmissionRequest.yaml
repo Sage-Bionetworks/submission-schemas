@@ -7,8 +7,6 @@ properties:
   submitter:
     type: string
     description: Submitter name
-  status:
-    $ref: SubmissionStatus.yaml
   workflow:
     type: string
     description: Workflow to run

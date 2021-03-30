@@ -7,8 +7,6 @@ properties:
   submitter:
     type: string
     description: Submitter name
-  status:
-    $ref: SubmissionStatus.yaml
   docker:
     type: object
     description: Docker repository
