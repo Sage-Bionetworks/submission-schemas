@@ -764,9 +764,6 @@
             "type": "string",
             "description": "Submitter name"
           },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
           "docker": {
             "type": "object",
             "description": "Docker repository",
@@ -808,9 +805,6 @@
             "type": "string",
             "description": "Submitter name"
           },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
-          },
           "file": {
             "type": "string",
             "description": "File to submit to challenge"
@@ -833,9 +827,6 @@
           "submitter": {
             "type": "string",
             "description": "Submitter name"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SubmissionStatus"
           },
           "workflow": {
             "type": "string",

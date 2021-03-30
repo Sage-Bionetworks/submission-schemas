@@ -522,8 +522,6 @@ components:
         submitter:
           type: string
           description: Submitter name
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
         docker:
           type: object
           description: Docker repository
@@ -556,8 +554,6 @@ components:
         submitter:
           type: string
           description: Submitter name
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
         file:
           type: string
           description: File to submit to challenge
@@ -575,8 +571,6 @@ components:
         submitter:
           type: string
           description: Submitter name
-        status:
-          $ref: '#/components/schemas/SubmissionStatus'
         workflow:
           type: string
           description: Workflow to run
