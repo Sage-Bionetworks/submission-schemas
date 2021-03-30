@@ -16,12 +16,16 @@ post:
           schema:
             $ref: ../components/schemas/CreateComputeEnvResponse.yaml
       description: Success
-    '403':
-      $ref: ../components/responses/Unauthorized.yaml
-    '404':
-      $ref: ../components/responses/NotFound.yaml
+    '400':
+      $ref: ../components/responses/BadRequest.yaml
+    # '403':
+    #   $ref: ../components/responses/Unauthorized.yaml
+    # '404':
+    #   $ref: ../components/responses/NotFound.yaml
     '409':
       $ref: ../components/responses/Conflict.yaml
+    '500':
+      $ref: ../components/responses/InternalServerError.yaml
 get:
   tags:
     - Compute
@@ -29,23 +33,8 @@ get:
   description: Returns the available compute environments
   operationId: "listComputeEnvs"
   parameters:
-    - in: query
-      name: limit
-      description: Maximum number of results returned
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 10
-        maximum: 100
-    - in: query
-      name: offset
-      description: Index of the first result that must be returned
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+    - $ref: ../components/parameters/PageLimit.yaml
+    - $ref: ../components/parameters/PageOffset.yaml
   responses:
     '200':
       content:
@@ -53,9 +42,11 @@ get:
           schema:
             $ref: ../components/schemas/ListComputeEnvResponse.yaml
       description: Success
-    '403':
-      $ref: ../components/responses/Unauthorized.yaml
-    '404':
-      $ref: ../components/responses/NotFound.yaml
+    '400':
+      $ref: ../components/responses/BadRequest.yaml
+    # '403':
+    #   $ref: ../components/responses/Unauthorized.yaml
+    # '404':
+    #   $ref: ../components/responses/NotFound.yaml
     '500':
       $ref: ../components/responses/InternalServerError.yaml
