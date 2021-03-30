@@ -51,12 +51,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateQueueResponse'
           description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '409':
           $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     get:
       tags:
         - Queue
@@ -73,10 +73,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListQueueResponse'
           description: Success
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
   '/queues/{queueId}':
@@ -361,13 +359,14 @@ components:
         computeId:
           type: string
           description: Compute Environment Id
-        workflowFiles:
-          items:
-            type: string
-          type: array
-          description: Workflow/Tool files and templates
+        workflowZip:
+          type: string
+          description: Link to github Workflow/Tool zip file
         workflowInput:
           description: Path to workflow inputs
+          type: string
+        workflowPath:
+          description: The Path to executable workflow
           type: string
         submissionType:
           description: Path to workflow inputs
@@ -606,14 +605,8 @@ components:
       required:
         - status
   responses:
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The specified resource was not found
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
@@ -626,6 +619,18 @@ components:
             $ref: '#/components/schemas/Error'
     Conflict:
       description: The request conflicts with current state of the target resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
