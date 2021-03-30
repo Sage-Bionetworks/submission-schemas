@@ -10,13 +10,11 @@ properties:
   computeId:
     type: string
     description: Compute Environment Id
-  workflowFiles:
-    items:
-      type: string
-    type: array
-    description: Workflow/Tool files and templates
+  workflowZip:
+    type: string
+    description: Link to github Workflow/Tool zip file
   workflowInput:
-    description: Path to workflow inputs
+    description: Path to workflow to execute
     type: string
   createdOn:
     description: Time of creation

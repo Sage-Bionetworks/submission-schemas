@@ -36,23 +36,8 @@ get:
   description: Returns the submissions from a queue
   operationId: "listSubmissions"
   parameters:
-    - in: query
-      name: limit
-      description: Maximum number of results returned
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 10
-        maximum: 100
-    - in: query
-      name: offset
-      description: Index of the first result that must be returned
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+    - $ref: ../components/parameters/PageLimit.yaml
+    - $ref: ../components/parameters/PageOffset.yaml
   responses:
     '200':
       content:
